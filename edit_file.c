@@ -13,6 +13,6 @@ int main(){
     }
 
     fclose(f);
-    
+
     return 0;
 }
