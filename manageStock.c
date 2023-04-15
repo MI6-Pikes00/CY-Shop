@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "structFile.c"
 #define SIZE 100
 #define SHOP_SIZE 1000
 
@@ -8,22 +9,6 @@
 //Gerer les stocks de pieces
 //Gerer stock  de voitures 
 
-//Defition of the product structure 
-typedef struct {
-    char name[SIZE];
-    int referance;
-    int quantity;
-    char size[SIZE];
-    int place;
-} Product;
-
-//Defition of the customer structure 
-typedef struct 
-{
-    char name[SIZE];
-    char firstName[SIZE];
-    int purchase[SIZE];
-} Customer;
 
 //Fonction to fill product structure
 Product * registerProduct(){
@@ -85,11 +70,11 @@ int main(int argc, char const *argv[])
     for(int i = 0; i<10; i++){
         productArray[i] = registerProduct();
     } 
+    */
 
     Customer customer;
     customer = *registerCustomer();
     printCustomer(customer);
-    */
 
 
     return 0;

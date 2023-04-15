@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.c"
+#include "structFile.c"
 #define TAB 10
 
 //Function to search an Item
@@ -16,7 +16,7 @@ int searchProduct(Product productArray[], int referance){
     return 0;
 }
 
-//
+//Function to sort item by name or referance or quantity by selection in the menu
 
 int sortProduct(){
     return 0;
