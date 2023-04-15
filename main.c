@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define SIZE 100
+#define SHOP_SIZE 1000
 
 //Entreprise de voiture,
 //Gerer les stocks de pieces
@@ -13,6 +14,7 @@ typedef struct {
     int referance;
     int quantity;
     char size[SIZE];
+    int place;
 } Product;
 
 //Defition of the customer structure 
@@ -38,14 +40,17 @@ Product * registerProduct(){
     switch (i){
     case 1:
         strncpy(p->size, "SMALL", sizeof(p->size)); // Voir ce que fait fct strncpy
+        p->place = 1;
         break;
 
      case 2:
         strncpy(p->size, "MEDIUM", sizeof(p->size));
+        p->place = 2;
         break;
 
      case 3:
         strncpy(p->size, "LARGE", sizeof(p->size));
+        p->place = 4;
         break;
 
     default:
@@ -80,13 +85,11 @@ int main(int argc, char const *argv[])
     for(int i = 0; i<10; i++){
         productArray[i] = registerProduct();
     } 
-    */
 
     Customer customer;
     customer = *registerCustomer();
     printCustomer(customer);
-
-
+    */
 
 
     return 0;
