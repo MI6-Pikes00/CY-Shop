@@ -5,14 +5,14 @@
 typedef struct {
     char name[SIZE];
     int referance;
+    float price;
     int quantity;
     char size[SIZE];
     int place;
 } Product;
 
 //Defition of the customer structure 
-typedef struct 
-{
+typedef struct {
     char name[SIZE];
     char firstName[SIZE];
     int nbPurchase;

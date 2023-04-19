@@ -22,7 +22,7 @@ void gestion(){
 }
 
 void purchase(){
-    
+
 }
 
 
@@ -32,23 +32,23 @@ void purchase(){
 int main(){
     char select[20];
 
-    
-    // Affichage des différents menus
-    home();
-    scanf("%s", select);
+    while(1){
+        // Affichage des différents menus
+        home();
+        scanf("%s", select);
 
-    // Comparaison between input and menu names
-    if(strcmp(select, "Gestion") == 0){
-        gestion();
+        // Comparaison between input and menu names
+        if(strcmp(select, "Gestion") == 0){
+            gestion();
+        }
+        else if(strcmp(select, "Purchase") == 0){
+            purchase();
+        }
+        else if(strcmp(select, "Exit") == 0){
+            return 0;
+        }
+        else{
+            printf("Error... Please make sure your input is correct");
+        }
     }
-    else if(strcmp(select, "Purchase") == 0){
-        purchase();
-    }
-    else if(strcmp(select, "Exit") == 0){
-        return 0;
-    }
-    else{
-        printf("Error... Please make sure your input is correct");
-    }
-
 }
