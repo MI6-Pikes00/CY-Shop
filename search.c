@@ -4,11 +4,14 @@
 #include "structFile.c"
 #define TAB 10
 
-//Function to search an Item
+// Function to search an Item
 
-int searchProduct(Product productArray[], int referance){
-    for (int i = 0; i<TAB; i++){
-        if(productArray[i].referance == referance){
+int searchProduct(Product productArray[], int referance)
+{
+    for (int i = 0; i < TAB; i++)
+    {
+        if (productArray[i].reference == referance)
+        {
             return productArray[i].quantity;
         }
         printf("The typed reference is unknown\n");
@@ -16,12 +19,14 @@ int searchProduct(Product productArray[], int referance){
     return 0;
 }
 
-//Function to sort item by name or referance or quantity by selection in the menu
-//1 : Name
-//2 : Quantity
+// Function to sort item by name or referance or quantity by selection in the menu
+// 1 : Name
+// 2 : Quantity
 
-int sortProduct(int i){
-    switch (i){
+int sortProduct(int i)
+{
+    switch (i)
+    {
     case 1:
         /* code */
         break;
@@ -36,4 +41,3 @@ int sortProduct(int i){
     }
     return 0;
 }
-
