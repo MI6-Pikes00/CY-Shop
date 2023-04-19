@@ -11,13 +11,29 @@ int searchProduct(Product productArray[], int referance){
         if(productArray[i].referance == referance){
             return productArray[i].quantity;
         }
-        // add case where product referance is unknowed
+        printf("The typed reference is unknown\n");
     }
     return 0;
 }
 
 //Function to sort item by name or referance or quantity by selection in the menu
+//1 : Name
+//2 : Quantity
 
-int sortProduct(){
+int sortProduct(int i){
+    switch (i){
+    case 1:
+        /* code */
+        break;
+
+    case 2:
+        /* code */
+        break;
+
+    default:
+        printf("type of sort unsigned\n");
+        break;
+    }
     return 0;
 }
+
