@@ -48,7 +48,7 @@ void saveProduct(Product products[], int nb_products, const char *fileName)
 
     if (fichier == NULL)
     {
-        printf("Error : unable to open the file%s\n", fileName);
+        printf("Error : unable to open the file %s\n", fileName);
         return;
     }
 
