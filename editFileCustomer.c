@@ -3,56 +3,70 @@
 #include <string.h>
 #include "structFile.c"
 
+// Function to save new data to clients.txt.
 
-void sauvegarder_clients(Customer clients[], int nb_clients, char* nom_fichier) {
-    FILE* fichier = fopen(nom_fichier, "w");
-    if (fichier == NULL) {
-        printf("Impossible d'ouvrir le fichier %s\n", nom_fichier);
+void saveClients(Customer clients[], int nb_clients, char *fileName)
+{
+    FILE *file = fopen(fileName, "w");
+    if (file == NULL)
+    {
+        printf("Error : unable to open the file %s\n", fileName);
         return;
     }
 
-    fprintf(fichier, "%d\n", nb_clients);
+    fprintf(file, "%d\n", nb_clients);
 
-    for (int i = 0; i < nb_clients; i++) {
-        fprintf(fichier, "%s\n", clients[i].firstName);
-        fprintf(fichier, "%s\n", clients[i].name);
-        fprintf(fichier, "%d\n", clients[i].nbPurchase);
-        for (int j = 0; j < clients[i].nbPurchase; j++) {
-            fprintf(fichier, "%d ", clients[i].purchase[j]);
+    for (int i = 0; i < nb_clients; i++)
+    {
+        fprintf(file, "%s\n", clients[i].firstName);
+        fprintf(file, "%s\n", clients[i].name);
+        fprintf(file, "%d\n", clients[i].nbPurchase);
+        for (int j = 0; j < clients[i].nbPurchase; j++)
+        {
+            fprintf(file, "%d ", clients[i].purchase[j]);
         }
-        fprintf(fichier, "\n");
+        fprintf(file, "\n");
     }
 
-    fclose(fichier);
+    fclose(file);
 }
 
-void charger_clients(Customer clients[], int* nb_clients, char* nom_fichier) {
-    FILE* fichier = fopen(nom_fichier, "r");
-    if (fichier == NULL) {
-        printf("Impossible d'ouvrir le fichier %s\n", nom_fichier);
+// Function to load data from clients.txt to modifies them.
+
+void loadClients(Customer clients[], int *nb_clients, char *fileName)
+{
+    FILE *file = fopen(fileName, "r");
+    if (file == NULL)
+    {
+        printf("Error : unable to open the file %s\n", fileName);
         return;
     }
 
-    fscanf(fichier, "%d\n", nb_clients);
+    fscanf(file, "%d\n", nb_clients);
 
-    for (int i = 0; i < *nb_clients; i++) {
-        fscanf(fichier, "%s\n", clients[i].firstName);
-        fscanf(fichier, "%s\n", clients[i].name);
-        fscanf(fichier, "%d\n", &clients[i].nbPurchase);
-        for (int j = 0; j < clients[i].nbPurchase; j++) {
-            fscanf(fichier, "%d ", &clients[i].purchase[j]);
+    for (int i = 0; i < *nb_clients; i++)
+    {
+        fscanf(file, "%s\n", clients[i].firstName);
+        fscanf(file, "%s\n", clients[i].name);
+        fscanf(file, "%d\n", &clients[i].nbPurchase);
+        for (int j = 0; j < clients[i].nbPurchase; j++)
+        {
+            fscanf(file, "%d ", &clients[i].purchase[j]);
         }
-        fscanf(fichier, "\n");
+        fscanf(file, "\n");
     }
 
-    fclose(fichier);
+    fclose(file);
 }
 
-void ajouter_client(Customer clients[], int* nb_clients) {
-    printf("Entrez le nom du nouveau client : ");
+// Function to add new client to data file.
+
+void addClient(Customer clients[], int *nb_clients)
+{
+    printf("Put new customer first name : ");
     scanf("%s", clients[*nb_clients].firstName);
 
-    printf("Entrez le prenom du nouveau client : ");
+    printf("Put name of new customer : ");
     scanf("%s", clients[*nb_clients].name);
 
     clients[*nb_clients].nbPurchase = 0;
@@ -60,19 +74,24 @@ void ajouter_client(Customer clients[], int* nb_clients) {
     (*nb_clients)++;
 }
 
-void ajouter_commande(Customer clients[], int nb_clients) {
-    printf("Entrez le nom du client : ");
-    char nom[100];
-    scanf("%s", nom);
+// Function to add purchase to specific customer.
 
-    printf("Entrez le prenom du client : ");
-    char prenom[100];
-    scanf("%s", prenom);
+void addPurchase(Customer clients[], int nb_clients)
+{
+    printf("Put first name of customer : ");
+    char firstName[100];
+    scanf("%s", firstName);
+
+    printf("Put name of customer : ");
+    char name[100];
+    scanf("%s", name);
 
     int client_trouve = 0;
-    for (int i = 0; i < nb_clients; i++) {
-        if (strcmp(clients[i].firstName, nom) == 0 && strcmp(clients[i].name, prenom) == 0) {
-            printf("Entrez le numero de la commande : ");
+    for (int i = 0; i < nb_clients; i++)
+    {
+        if (strcmp(clients[i].firstName, firstName) == 0 && strcmp(clients[i].name, name) == 0)
+        {
+            printf("Put reference order : ");
             int commande;
             scanf("%d", &commande);
 
@@ -83,19 +102,23 @@ void ajouter_commande(Customer clients[], int nb_clients) {
             break;
         }
     }
-
-    if (!client_trouve) {
-        printf("Client introuvable\n");
+    // Error case if the user put another value like text or unkonow client.
+    if (!client_trouve)
+    {
+        printf("Customer not found\n");
     }
 }
 
+// Function to test that the above functions work well during development.
 
-/* int main() {
+/*int main() {
+
+    //Creation of client tab to simulate reality
     Customer clients[100];
     int nb_clients = 0;
 
-    charger_clients(clients, &nb_clients, "clients.txt");
-
+    loadClients(clients, &nb_clients, "clients.txt");
+    //Quick menu to test the different functions
     while (1) {
         printf("1. Afficher la liste des clients\n");
         printf("2. Ajouter un nouveau client\n");
@@ -113,22 +136,22 @@ void ajouter_commande(Customer clients[], int nb_clients) {
                 }
                 printf("\n");
             }
-        } 
-        
+        }
+
         else if (choix == 2) {
-            ajouter_client(clients, &nb_clients);
-            sauvegarder_clients(clients, nb_clients, "clients.txt");
-        } 
-        
+            addClient(clients, &nb_clients);
+            saveClients(clients, nb_clients, "clients.txt");
+        }
+
         else if (choix == 3) {
-            ajouter_commande(clients, nb_clients);
-            
-        } 
-        
+            addPurchase(clients, nb_clients);
+
+        }
+
         else if (choix == 4) {
             break;
-        } 
-        
+        }
+
         else {
             printf("Choix invalide\n");
         }
