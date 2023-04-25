@@ -1,5 +1,6 @@
 #include <stdio.h>
 #define SIZE 100
+#define SHOP 1000
 
 // Defition of the product structure
 typedef struct
