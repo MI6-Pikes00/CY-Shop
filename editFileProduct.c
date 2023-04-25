@@ -1,26 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "structFile.c"
 
 // Function to add product to the stock.
 
+int checkReference(Product products[], int nb_products, int ref)
+{
+    // loop to find the product if reference is allready donated
+
+    printf("verification !\n");
+
+    for (int i = 0; i < nb_products; i++)
+    {
+        if (products[i].reference == ref)
+        {
+            return 0;
+        }
+        return 1;
+    }
+    return 11;
+}
+
 void addProduct(Product products[], int *nb_products)
 {
+    srand(time(NULL));
+    int b = 1;
+
     printf("Put the name : ");
     scanf("%s", products[*nb_products].name);
-
-    printf("Put the reference : ");
-    scanf("%d", &products[*nb_products].reference);
 
     printf("Put the quantity : ");
     scanf("%d", &products[*nb_products].quantity);
 
-    printf("Put the size : ");
-    scanf("%s", products[*nb_products].size);
+    do
+    {
+        int s = 0;
+        printf("Put the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
+        scanf("%d", &s);
+        switch (s)
+        {
+        case 1:
+            strcat(products[*nb_products].size, "SMALL");
+            products[*nb_products].place = 1;
+            b = 0;
+            break;
+        case 2:
+            strcat(products[*nb_products].size, "MEDIUM");
+            products[*nb_products].place = 2;
+            b = 0;
+            break;
+        case 3:
+            strcat(products[*nb_products].size, "LARGE");
+            products[*nb_products].place = 4;
+            b = 0;
+            break;
+        default:
+            printf("Error value is not correct ! \n");
+            break;
+        }
+    } while (b);
 
-    printf("Put the place : ");
-    scanf("%d", &products[*nb_products].place);
+    printf("Size is defined ! \n");
+
+    b = 1;
+
+    // Loop to not asign twice the same reference use function check reference
+
+    do
+    {
+        int ref = rand() % (9999 + 1 - 1000);
+        if (checkReference(products, *nb_products, ref))
+        {
+            products[*nb_products].reference = ref;
+            printf("The reference assigned is %d \n", ref);
+            b = 0;
+        }
+    } while (b);
 
     (*nb_products)++;
 }
@@ -89,9 +146,8 @@ void modifiesQuantity(Product products[], int nb_products)
     printf("Enter the reference of the product whose quantity you want to change: ");
     scanf("%d", &ref);
 
-    int i;
     // loop to find the product associate with the reference
-    for (i = 0; i < nb_products; i++)
+    for (int i = 0; i < nb_products; i++)
     {
         if (products[i].reference == ref)
         {
@@ -108,14 +164,14 @@ void modifiesQuantity(Product products[], int nb_products)
 
 // Function to test that the above functions work well during development.
 
-/*int main() {
+/* int main() {
 
     //Creation of product tab to simulate reality
 
     Product products[100];
     int nb_products = 0;
 
-    loadProduct(products, &nb_products, "productsTEST.txt");
+    loadProduct(products, &nb_products, "products.txt");
 
     //Quick menu to test the different functions
 
