@@ -4,11 +4,47 @@
 #include <time.h>
 #include "structFile.c"
 
-// Function to add product to the stock.
+// Function to check if there is place available.
+
+int placeAvailabe(Product products[], int nb_products)
+{
+    int s = 0;
+
+    // Loop to calculate the number of place the stock take.
+
+    for (int j = 0; j < nb_products; j++)
+    {
+        s += products[j].quantity * products[j].place;
+    }
+    return s;
+}
+
+// Function to check if there is no unavailable product and print it to the worker.
+
+void stockVerification(Product products[], int nb_products)
+{
+    printf("Stock place available : %d \n", SHOP - placeAvailabe(products, nb_products));
+
+    printf("\n");
+
+    // Loop for check if quantity of product is 0, if it is, we print it.
+
+    printf("Product out of stock :\n");
+    for (int i = 0; i < nb_products; i++)
+    {
+        if (products[i].quantity == 0)
+        {
+            printf("\tName : %s, ", products[i].name);
+            printf("\tReference : %d\n", products[i].reference);
+        }
+    }
+}
+
+// Function to check if reference is already attributed to a product.
 
 int checkReference(Product products[], int nb_products, int ref)
 {
-    // loop to find the product if reference is allready donated
+    // Loop to find the product if reference is allready donated.
 
     printf("verification !\n");
 
@@ -16,76 +52,103 @@ int checkReference(Product products[], int nb_products, int ref)
     {
         if (products[i].reference == ref)
         {
+
+            // Return 0 if the reference is already asigned so he chose another.
             return 0;
         }
+
+        // Return 1 if the reference is new.
         return 1;
     }
-    return 11;
+    return 1;
 }
 
-void addProduct(Product products[], int *nb_products)
+// Function to add product to the stock.
+
+void addProduct(Product products[], int *nb_products) // We put *nb_products, because we are modifying the value at the end 
 {
-    srand(time(NULL));
-    int b = 1;
-
-    printf("Put the name : ");
-    scanf("%s", products[*nb_products].name);
-
-    printf("Put the quantity : ");
-    scanf("%d", &products[*nb_products].quantity);
-
-    do
+    // Condition to check if there is place available.
+    if (SHOP - placeAvailabe(products, *nb_products) > 0)
     {
-        int s = 0;
-        printf("Put the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
-        scanf("%d", &s);
-        switch (s)
+        srand(time(NULL));
+        int b = 1;
+
+        printf("Put the name : ");
+        scanf("%s", products[*nb_products].name);
+
+        printf("Put the quantity : ");
+        scanf("%d", &products[*nb_products].quantity);
+
+        // Loop to check if the recovery of input is correct
+        do
         {
-        case 1:
-            strcat(products[*nb_products].size, "SMALL");
-            products[*nb_products].place = 1;
-            b = 0;
-            break;
-        case 2:
-            strcat(products[*nb_products].size, "MEDIUM");
-            products[*nb_products].place = 2;
-            b = 0;
-            break;
-        case 3:
-            strcat(products[*nb_products].size, "LARGE");
-            products[*nb_products].place = 4;
-            b = 0;
-            break;
-        default:
-            printf("Error value is not correct ! \n");
-            break;
-        }
-    } while (b);
+            int p = 0;
+            printf("Put the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
+            scanf("%d", &p);
+            if (SHOP - (placeAvailabe(products, *nb_products) + (products[*nb_products].quantity * p)) > 0)
+            {
+                // Case who attribute good variable to input
+                switch (p)
+                {
+                case 1:
+                    strcat(products[*nb_products].size, "SMALL");
+                    products[*nb_products].place = 1;
+                    b = 0;
+                    break;
+                case 2:
+                    strcat(products[*nb_products].size, "MEDIUM");
+                    products[*nb_products].place = 2;
+                    b = 0;
+                    break;
+                case 3:
+                    strcat(products[*nb_products].size, "LARGE");
+                    products[*nb_products].place = 4;
+                    b = 0;
+                    break;
+                default:
+                    printf("Error value is not correct ! \n");
+                    break;
+                }
+            }
+            // Basic case, return an error if there is no place
+            else
+            {
+                printf("There is no more space, the object %s is to big", products[*nb_products].name);
+                return;
+            }
+        } while (b);
 
-    printf("Size is defined ! \n");
+        printf("Size is defined ! \n");
 
-    b = 1;
+        b = 1;
 
-    // Loop to not asign twice the same reference use function check reference
+        // Loop to not asign twice the same reference use function check reference
 
-    do
+        do
+        {
+            int ref = rand() % (9999 + 1 - 1000); // If more item, increase the 9999
+            if (checkReference(products, *nb_products, ref))
+            {
+                products[*nb_products].reference = ref;
+                printf("The reference assigned is %d \n", ref);
+                b = 0;
+            }
+        } while (b);
+
+        (*nb_products)++;
+    }
+
+    else
     {
-        int ref = rand() % (9999 + 1 - 1000);
-        if (checkReference(products, *nb_products, ref))
-        {
-            products[*nb_products].reference = ref;
-            printf("The reference assigned is %d \n", ref);
-            b = 0;
-        }
-    } while (b);
-
-    (*nb_products)++;
+        printf("No more space\n");
+    }
 }
 
 // Function to display all products.
 
 void displayProduct(Product products[], int nb_products)
 {
+    // Loop to print all product list with their information
     for (int i = 0; i < nb_products; i++)
     {
         printf("Product %d :\n", i + 1);
@@ -93,27 +156,28 @@ void displayProduct(Product products[], int nb_products)
         printf("\tReference : %d\n", products[i].reference);
         printf("\tQuantity : %d\n", products[i].quantity);
         printf("\tSize : %s\n", products[i].size);
-        printf("\tPlace : %d\n", products[i].place);
     }
 }
 
 // Function that allows to write to the text file where the data are stored.
 
 void saveProduct(Product products[], int nb_products, const char *fileName)
-{
+{   
+    // Open the file in writing mode.
     FILE *fichier = fopen(fileName, "w");
-
+    // Condition so the function printf error if the file is not found.
     if (fichier == NULL)
     {
         printf("Error : unable to open the file %s\n", fileName);
         return;
     }
-
+    // Loop who print all information in the file. (Rewrite all)
     for (int i = 0; i < nb_products; i++)
     {
-        fprintf(fichier, "%s %d %d %s %d\n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
+        fprintf(fichier, "Name: %s,  Reference: %d, Quantity %d, Size: %s \n", products[i].name, products[i].reference, products[i].quantity, products[i].size);
     }
 
+    // Close the file after the ending
     fclose(fichier);
 }
 
@@ -125,10 +189,10 @@ void loadProduct(Product products[], int *nb_products, const char *fileName)
 
     if (fichier == NULL)
     {
-        printf("Error : unable to open the file%s\n", fileName);
+        printf("Error : unable to open the file %s \n", fileName);
         return;
     }
-
+    // Loop who scan the file data.
     while (!feof(fichier))
     {
         fscanf(fichier, "%s %d %d %s %d\n", products[*nb_products].name, &products[*nb_products].reference, &products[*nb_products].quantity, products[*nb_products].size, &products[*nb_products].place);
@@ -152,9 +216,20 @@ void modifiesQuantity(Product products[], int nb_products)
         if (products[i].reference == ref)
         {
             printf("Current quantity : %d\n", products[i].quantity);
-            printf("Put new quantity : ");
-            scanf("%d", &products[i].quantity);
-            printf("Quantity successfully modified.\n");
+            int q = 0;
+            printf("Put new quantity to add : ");
+            scanf("%d", &q);
+            // Condition verify if plave available.
+            if (SHOP - (placeAvailabe(products, nb_products) + (products[i].place * (products[i].quantity + q))) >= 0)
+            {
+                products[i].quantity += q;
+                printf("Quantity successfully modified.\n");
+            }
+            else
+            {
+                printf("No more place available !\n");
+                printf("You just have %d place left.\n", SHOP - (placeAvailabe(products, nb_products)));
+            }
             return;
         }
     }
@@ -164,18 +239,23 @@ void modifiesQuantity(Product products[], int nb_products)
 
 // Function to test that the above functions work well during development.
 
-/* int main() {
+/* int main()
+{
 
-    //Creation of product tab to simulate reality
+    // Creation of product tab to simulate reality
 
     Product products[100];
     int nb_products = 0;
 
     loadProduct(products, &nb_products, "products.txt");
 
-    //Quick menu to test the different functions
+    // Quick menu to test the different functions
 
-    while (1) {
+    while (1)
+    {
+        printf("\n");
+        stockVerification(products, nb_products);
+        printf("\n");
         printf("1. Display products list\n");
         printf("2. Add new product\n");
         printf("3. Modifies product quantity\n");
@@ -184,25 +264,26 @@ void modifiesQuantity(Product products[], int nb_products)
         int choice;
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                printf("Products list:\n");
-                displayProduct(products, nb_products);
-                break;
-            case 2:
-                addProduct(products, &nb_products);
-                saveProduct(products, nb_products, "products.txt");
-                break;
-            case 3:
-                modifiesQuantity(products, nb_products);
+        switch (choice)
+        {
+        case 1:
+            printf("Products list:\n");
+            displayProduct(products, nb_products);
+            break;
+        case 2:
+            addProduct(products, &nb_products);
+            saveProduct(products, nb_products, "products.txt");
+            break;
+        case 3:
+            modifiesQuantity(products, nb_products);
+            saveProduct(products, nb_products, "products.txt");
+            break;
 
-                break;
-
-            case 4:
-                return 0;
-                break;
-            default:
-                printf("Erreur : choice invalide\n");
+        case 4:
+            return 0;
+            break;
+        default:
+            printf("Erreur : choice invalide\n");
         }
     }
 }
