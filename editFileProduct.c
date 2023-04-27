@@ -28,7 +28,7 @@ void stockVerification(Product products[], int nb_products)
     printf("\n");
 
     // Loop for check if quantity of product is 0, if it is, we print it.
-
+    int c = 0;
     printf("Product out of stock :\n");
     for (int i = 0; i < nb_products; i++)
     {
@@ -36,7 +36,16 @@ void stockVerification(Product products[], int nb_products)
         {
             printf("\tName : %s, ", products[i].name);
             printf("\tReference : %d\n", products[i].reference);
+            c++;
         }
+    }
+
+    // Loop to display 5 first product with the lowest stock after out of stock products.
+    printf("Product with low stock :\n");
+    for (int j = c; j < c + 5; j++)
+    {
+        printf("\tName : %s, ", products[j].name);
+        printf("\tReference : %d\n", products[j].reference);
     }
 }
 
@@ -65,7 +74,7 @@ int checkReference(Product products[], int nb_products, int ref)
 
 // Function to add product to the stock.
 
-void addProduct(Product products[], int *nb_products) // We put *nb_products, because we are modifying the value at the end 
+void addProduct(Product products[], int *nb_products) // We put *nb_products, because we are modifying the value at the end
 {
     // Condition to check if there is place available.
     if (SHOP - placeAvailabe(products, *nb_products) > 0)
@@ -156,13 +165,14 @@ void displayProduct(Product products[], int nb_products)
         printf("\tReference : %d\n", products[i].reference);
         printf("\tQuantity : %d\n", products[i].quantity);
         printf("\tSize : %s\n", products[i].size);
+        printf("\tPlace: %d\n", products[i].place);
     }
 }
 
 // Function that allows to write to the text file where the data are stored.
 
 void saveProduct(Product products[], int nb_products, const char *fileName)
-{   
+{
     // Open the file in writing mode.
     FILE *fichier = fopen(fileName, "w");
     // Condition so the function printf error if the file is not found.
@@ -174,7 +184,7 @@ void saveProduct(Product products[], int nb_products, const char *fileName)
     // Loop who print all information in the file. (Rewrite all)
     for (int i = 0; i < nb_products; i++)
     {
-        fprintf(fichier, "Name: %s,  Reference: %d, Quantity %d, Size: %s \n", products[i].name, products[i].reference, products[i].quantity, products[i].size);
+        fprintf(fichier, "%s %d %d %s %d \n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
     }
 
     // Close the file after the ending
@@ -237,6 +247,43 @@ void modifiesQuantity(Product products[], int nb_products)
     printf("Error : product not find.\n");
 }
 
+// Function to sort by quantity product.
+
+void quickSort(Product tab[], int start, int end)
+{
+    if (start < end)
+    {
+        int pivot = tab[start].quantity;
+        int i = start + 1;
+        int j = end;
+
+        while (i <= j)
+        {
+            while (i <= j && tab[i].quantity <= pivot)
+            {
+                i++;
+            }
+            while (i <= j && tab[j].quantity > pivot)
+            {
+                j--;
+            }
+            if (i < j)
+            {
+                Product temp = tab[i];
+                tab[i] = tab[j];
+                tab[j] = temp;
+            }
+        }
+
+        Product temp = tab[start];
+        tab[start] = tab[j];
+        tab[j] = temp;
+
+        quickSort(tab, start, j - 1);
+        quickSort(tab, j + 1, end);
+    }
+}
+
 // Function to test that the above functions work well during development.
 
 /* int main()
@@ -253,6 +300,10 @@ void modifiesQuantity(Product products[], int nb_products)
 
     while (1)
     {
+
+        quickSort(products, 0, nb_products - 1);
+        saveProduct(products, nb_products, "products.txt");
+
         printf("\n");
         stockVerification(products, nb_products);
         printf("\n");
@@ -272,6 +323,7 @@ void modifiesQuantity(Product products[], int nb_products)
             break;
         case 2:
             addProduct(products, &nb_products);
+            quickSort(products, 0, nb_products - 1);
             saveProduct(products, nb_products, "products.txt");
             break;
         case 3:

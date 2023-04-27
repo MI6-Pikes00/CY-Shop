@@ -1,0 +1,1 @@
+triRapide(products, 0, nb_products);

@@ -1,7 +1,6 @@
-Name: wv,  Reference: 2188, Quantity 3, Size: GRAND 
-Name: bmw,  Reference: 2108, Quantity 0, Size: GRAND 
-Name: mercedes,  Reference: 7724, Quantity 1, Size: GRAND 
-Name: peugeot,  Reference: 3038, Quantity 102, Size: GRAND 
-Name: citroen,  Reference: 4976, Quantity 3, Size: SMALL 
-Name: alfa,  Reference: 3936, Quantity 4, Size: MEDIUM 
-Name: Nissan,  Reference: 4970, Quantity 10, Size: LARGE 
+bmw 2108 0 LARGE 4 
+mercedes 7724 1 LARGE 4 
+citroen 4976 3 SMALL 1 
+wv 2188 3 LARGE 4 
+alfa 3936 4 MEDIUM 2 
+Nissan 4970 10 LARGE 4 
