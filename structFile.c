@@ -18,6 +18,7 @@ typedef struct
 {
     char name[SIZE];
     char firstName[SIZE];
-    int nbPurchase;
     int purchase[SIZE];
+    int nbPurchase;
+    int reference;
 } Customer;
