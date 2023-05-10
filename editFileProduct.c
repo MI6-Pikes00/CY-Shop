@@ -174,9 +174,9 @@ void displayProduct(Product products[], int nb_products)
 void saveProduct(Product products[], int nb_products, const char *fileName)
 {
     // Open the file in writing mode.
-    FILE *fichier = fopen(fileName, "w");
+    FILE *file = fopen(fileName, "w");
     // Condition so the function printf error if the file is not found.
-    if (fichier == NULL)
+    if (file == NULL)
     {
         printf("Error : unable to open the file %s\n", fileName);
         return;
@@ -184,32 +184,32 @@ void saveProduct(Product products[], int nb_products, const char *fileName)
     // Loop who print all information in the file. (Rewrite all)
     for (int i = 0; i < nb_products; i++)
     {
-        fprintf(fichier, "%s %d %d %s %d \n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
+        fprintf(file, "%s %d %d %s %d \n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
     }
 
     // Close the file after the ending
-    fclose(fichier);
+    fclose(file);
 }
 
 // Function that allows you to load the customer file and then make changes to it.
 
 void loadProduct(Product products[], int *nb_products, const char *fileName)
 {
-    FILE *fichier = fopen(fileName, "r");
+    FILE *file = fopen(fileName, "r");
 
-    if (fichier == NULL)
+    if (file == NULL)
     {
         printf("Error : unable to open the file %s \n", fileName);
         return;
     }
     // Loop who scan the file data.
-    while (!feof(fichier))
+    while (!feof(file))
     {
-        fscanf(fichier, "%s %d %d %s %d\n", products[*nb_products].name, &products[*nb_products].reference, &products[*nb_products].quantity, products[*nb_products].size, &products[*nb_products].place);
+        fscanf(file, "%s %d %d %s %d\n", products[*nb_products].name, &products[*nb_products].reference, &products[*nb_products].quantity, products[*nb_products].size, &products[*nb_products].place);
         (*nb_products)++;
     }
 
-    fclose(fichier);
+    fclose(file);
 }
 
 // Fuction to modifies porduct quantity by there reference.
@@ -283,6 +283,8 @@ void quickSort(Product tab[], int start, int end)
         quickSort(tab, j + 1, end);
     }
 }
+
+
 
 // Function to test that the above functions work well during development.
 
