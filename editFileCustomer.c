@@ -14,45 +14,156 @@ int genererNumeroCompte()
     return rand() % (9999 + 1 - 1000);
 }
 
-int numeroCompteExiste(int numeroCompte)
+int numeroCompteExiste(int numeroCompte, Customer clients[], int nbClients)
 {
     // Vérification de l'existence du numéro de compte dans les fichiers clients
-    DIR *dossier = opendir("clients");
-    if (dossier == NULL)
-    {
-        return 0;
-    }
-
-    struct dirent *entree;
-    while ((entree = readdir(dossier)) != NULL)
-    {
-        if (strcmp(entree->d_name, ".") == 0 || strcmp(entree->d_name, "..") == 0)
+    for (int i = 0; i < nbClients; i++)
+        if (clients[i].reference == numeroCompte)
         {
-            continue;
-        }
-
-        char fileName[20];
-        sprintf(fileName, "clients/%s", entree->d_name);
-        FILE *file = fopen(fileName, "rb");
-        if (file == NULL)
-        {
-            continue;
-        }
-
-        Customer client;
-        fread(&client, sizeof(Customer), 1, file);
-        fclose(file);
-
-        if (client.reference == numeroCompte)
-        {
-            closedir(dossier);
             return 1;
         }
-    }
-
-    closedir(dossier);
     return 0;
 }
+
+void accountRegister(Customer clients[], int *nbClients)
+{
+    int numeroCompte = 0;
+    if (*nbClients == MAX_CLIENTS)
+    {
+        printf("Le nombre maximum de clients est atteint.\n");
+        return;
+    }
+
+    // Saisie des informations du nouveau client
+    Customer nouveauClient;
+    printf("Entrez votre nom: ");
+    scanf("%s", nouveauClient.firstName);
+    printf("Entrez votre prénom: ");
+    scanf("%s", nouveauClient.name);
+
+    // Génération aléatoire du numéro de compte
+    do
+    {
+        numeroCompte = genererNumeroCompte();
+    } while (numeroCompteExiste(numeroCompte, clients, *nbClients));
+    nouveauClient.reference = numeroCompte;
+
+    // Ajout du nouveau client à la liste des clients
+    clients[*nbClients] = nouveauClient;
+    *nbClients++;
+
+    // Enregistrement du nouveau client dans un fichier
+    char fileName[20];
+    sprintf(fileName, "%d.dat", numeroCompte);
+
+    char *folderPath = "clientFolder/";
+    char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
+
+    // Construit le chemin complet du file
+    strcpy(filePath, folderPath);
+    strcat(filePath, fileName);
+
+    FILE *file = fopen(filePath, "wb");
+    if (file == NULL)
+    {
+        printf("Erreur lors de l'enregistrement du nouveau client.\n");
+        return;
+    }
+    fwrite(&nouveauClient, sizeof(Customer), 1, file);
+    fclose(file);
+
+    printf("Votre compte a été créé avec succès.\n");
+    printf("Voici votre numéro de compte: %d\n", numeroCompte);
+    printf("\n");
+}
+
+void accountAcces(Customer clients[], int nbClients)
+{
+    int numeroCompte = 0;
+
+    printf("Entrez votre numéro de compte: ");
+    scanf("%d", &numeroCompte);
+    printf("\n");
+
+    // Recherche du client correspondant au numéro de compte
+    int i;
+    for (i = 0; i < nbClients; i++)
+    {
+        if (clients[i].reference == numeroCompte)
+        {
+            printf("Bonjour %s %s.\n", clients[i].name, clients[i].firstName);
+            printf("Historique des achats:\n");
+            break;
+        }
+    }
+
+    if (i == nbClients)
+    {
+        printf("Numéro de compte invalide.\n");
+    }
+    printf("\n");
+}
+
+void deleteFile(int numeroCompte){
+        char fileName[20];
+        sprintf(fileName, "%d.dat", numeroCompte);
+
+        char *folderPath = "clientFolder/";
+        char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
+
+        // Construit le chemin complet du file
+        strcpy(filePath, folderPath);
+        strcat(filePath, fileName);
+        if (remove(filePath) == 0)
+        {
+            printf("Votre compte %d a été supprimé avec succès.\n", numeroCompte);
+        }
+        else
+        {
+            perror("Erreur lors de la suppression du fichier");
+        }
+    }
+}
+
+void deleteAccount(Customer clients[], int nbClients)
+{
+    int numeroCompte = 0;
+
+    printf("Entrez votre numéro de compte: ");
+    scanf("%d", &numeroCompte);
+    printf("\n");
+
+    if (numeroCompteExiste(numeroCompte, clients, nbClients))
+    {
+        int choix = 0;
+        do
+        {
+            printf("Voulez vous supprimer votre compte\n");
+            printf("1. Valider\n");
+            printf("2. Annuler\n");
+            
+            printf("Entrez votre choix: ");
+            scanf("%d", &choix);
+            printf("\n");
+            switch (choix)
+            {
+            case 1: // S'identifier
+                deleteFile(numeroCompte);
+                break;
+
+            case 2: // Créer un nouveau compte
+                printf("Annulation ...\n");
+                break;
+
+            }
+        } while (choix != 2);
+        
+    printf("Votre numero de compte n'existe pas.\n");
+}
+/*   delocaliser les fonctions pour les appeles
+  faire fonction pour supprimer compte en fonction de mdp
+  faire recupperation de mot de passe suivant une question que l'on choisi
+*/
 
 int main()
 {
@@ -77,8 +188,15 @@ int main()
         }
 
         char fileName[20];
-        sprintf(fileName, "clientFolder/%s", entree->d_name);
-        FILE *file = fopen(fileName, "rb");
+        char *folderPath = "clientFolder/";
+        char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
+
+        // Construit le chemin complet du file
+        strcpy(fileName, entree->d_name);
+        strcpy(filePath, folderPath);
+        strcat(filePath, fileName);
+
+        FILE *file = fopen(filePath, "rb");
         if (file == NULL)
         {
             printf("Erreur lors de l'ouverture du file %s.\n", fileName);
@@ -99,88 +217,26 @@ int main()
         printf("MENU PRINCIPAL\n");
         printf("1. S'identifier\n");
         printf("2. Créer un nouveau compte\n");
-        printf("3. Quitter\n");
+        printf("3. Supprimer un compte\n");
+        printf("4. Quitter\n");
         printf("Entrez votre choix: ");
         scanf("%d", &choix);
         printf("\n");
-        int numeroCompte = 0;
         switch (choix)
         {
         case 1: // S'identifier
-            printf("Entrez votre numéro de compte: ");
-            scanf("%d", &numeroCompte);
-            printf("\n");
-
-            // Recherche du client correspondant au numéro de compte
-            int i;
-            for (i = 0; i < nbClients; i++)
-            {
-                if (clients[i].reference == numeroCompte)
-                {
-                    printf("Bonjour %s %s.\n", clients[i].name, clients[i].firstName);
-                    printf("Historique des achats:\n");
-                    break;
-                }
-            }
-
-            if (i == nbClients)
-            {
-                printf("Numéro de compte invalide.\n");
-            }
-            printf("\n");
+            accountAcces(clients, nbClients);
             break;
 
         case 2: // Créer un nouveau compte
-            if (nbClients == MAX_CLIENTS)
-            {
-                printf("Le nombre maximum de clients est atteint.\n");
-                break;
-            }
-
-            // Saisie des informations du nouveau client
-            Customer nouveauClient;
-            printf("Entrez votre nom: ");
-            scanf("%s", nouveauClient.firstName);
-            printf("Entrez votre prénom: ");
-            scanf("%s", nouveauClient.name);
-
-            // Génération aléatoire du numéro de compte
-            do
-            {
-                numeroCompte = genererNumeroCompte();
-            } while (numeroCompteExiste(numeroCompte));
-            nouveauClient.reference = numeroCompte;
-
-            // Ajout du nouveau client à la liste des clients
-            clients[nbClients] = nouveauClient;
-            nbClients++;
-
-            // Enregistrement du nouveau client dans un fichier
-            char fileName[20];
-            sprintf(fileName, "%d.dat", numeroCompte);
-
-            char *folderPath = "clientFolder/";
-            char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
-
-            // Construit le chemin complet du file
-            strcpy(filePath, folderPath);
-            strcat(filePath, fileName);
-
-            FILE *file = fopen(filePath, "wb");
-            if (file == NULL)
-            {
-                printf("Erreur lors de l'enregistrement du nouveau client.\n");
-                break;
-            }
-            fwrite(&nouveauClient, sizeof(Customer), 1, file);
-            fclose(file);
-
-            printf("Votre compte a été créé avec succès.\n");
-            printf("Voici votre numéro de compte: %d\n", numeroCompte);
-            printf("\n");
+            accountRegister(clients, &nbClients);
             break;
 
-        case 3: // Quitter
+        case 3:
+            deleteAccount(clients, nbClients);
+            break;
+
+        case 4: // Quitter
             printf("Au revoir!\n");
             break;
 
@@ -189,7 +245,7 @@ int main()
             printf("\n");
             break;
         }
-    } while (choix != 3);
+    } while (choix != 4);
 
     return 0;
 }

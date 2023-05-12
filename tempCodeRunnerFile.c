@@ -1,1 +1,1 @@
-triRapide(products, 0, nb_products);
+printf(" bonsoirrrrrzeoihrzeoirhezoi  %d\n", nbClients);
