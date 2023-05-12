@@ -104,24 +104,24 @@ void accountAcces(Customer clients[], int nbClients)
     printf("\n");
 }
 
-void deleteFile(int numeroCompte){
-        char fileName[20];
-        sprintf(fileName, "%d.dat", numeroCompte);
+void deleteFile(int numeroCompte)
+{
+    char fileName[20];
+    sprintf(fileName, "%d.dat", numeroCompte);
 
-        char *folderPath = "clientFolder/";
-        char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
+    char *folderPath = "clientFolder/";
+    char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
 
-        // Construit le chemin complet du file
-        strcpy(filePath, folderPath);
-        strcat(filePath, fileName);
-        if (remove(filePath) == 0)
-        {
-            printf("Votre compte %d a été supprimé avec succès.\n", numeroCompte);
-        }
-        else
-        {
-            perror("Erreur lors de la suppression du fichier");
-        }
+    // Construit le chemin complet du file
+    strcpy(filePath, folderPath);
+    strcat(filePath, fileName);
+    if (remove(filePath) == 0)
+    {
+        printf("Votre compte %d a été supprimé avec succès.\n", numeroCompte);
+    }
+    else
+    {
+        perror("Erreur lors de la suppression du fichier");
     }
 }
 
@@ -141,7 +141,7 @@ void deleteAccount(Customer clients[], int nbClients)
             printf("Voulez vous supprimer votre compte\n");
             printf("1. Valider\n");
             printf("2. Annuler\n");
-            
+
             printf("Entrez votre choix: ");
             scanf("%d", &choix);
             printf("\n");
@@ -149,16 +149,16 @@ void deleteAccount(Customer clients[], int nbClients)
             {
             case 1: // S'identifier
                 deleteFile(numeroCompte);
-                break;
+                return;
 
             case 2: // Créer un nouveau compte
                 printf("Annulation ...\n");
                 break;
-
             }
         } while (choix != 2);
-        
-    printf("Votre numero de compte n'existe pas.\n");
+
+        printf("Votre numero de compte n'existe pas.\n");
+    }
 }
 /*   delocaliser les fonctions pour les appeles
   faire fonction pour supprimer compte en fonction de mdp
