@@ -5,20 +5,20 @@
 #include <time.h>
 #include <dirent.h>
 
-#define MAX_CLIENTS 1000 // Nombre maximum de clients pouvant être enregistrés
+#define MAX_CLIENTS 1000 // Maximum number of clients that can be registered
 
-int genererNumeroCompte()
+int genereraccountNumber()
 {
-    // Génération d'un nombre aléatoire entre 1000 et 9999
+    // Generation of a random number between 1000 and 9999
     srand(time(NULL));
     return rand() % (9999 + 1 - 1000);
 }
 
-int numeroCompteExiste(int numeroCompte, Customer clients[], int nbClients)
+int accountNumberAttributed(int accountNumber, Customer clients[], int nbClients)
 {
-    // Vérification de l'existence du numéro de compte dans les fichiers clients
+    // Verification of the existence of the account number in the customer files
     for (int i = 0; i < nbClients; i++)
-        if (clients[i].reference == numeroCompte)
+        if (clients[i].reference == accountNumber)
         {
             return 1;
         }
@@ -27,87 +27,94 @@ int numeroCompteExiste(int numeroCompte, Customer clients[], int nbClients)
 
 void accountRegister(Customer clients[], int *nbClients)
 {
-    int numeroCompte = 0;
+    int accountNumber = 0;
     if (*nbClients == MAX_CLIENTS)
     {
-        printf("Le nombre maximum de clients est atteint.\n");
+        printf("The maximum number of customers is reached.\n");
         return;
     }
 
-    // Saisie des informations du nouveau client
-    Customer nouveauClient;
-    printf("Entrez votre nom: ");
-    scanf("%s", nouveauClient.firstName);
-    printf("Entrez votre prénom: ");
-    scanf("%s", nouveauClient.name);
+    // Entering the new customer's information
+    Customer newCustomer;
+    printf("Enter your name: ");
+    scanf("%s", newCustomer.firstName);
+    printf("Enter your first name: ");
+    scanf("%s", newCustomer.name);
+    printf("Enter your password: ");
+    scanf("%s", newCustomer.password);
 
-    // Génération aléatoire du numéro de compte
+    // Random generation of the account number
     do
     {
-        numeroCompte = genererNumeroCompte();
-    } while (numeroCompteExiste(numeroCompte, clients, *nbClients));
-    nouveauClient.reference = numeroCompte;
+        accountNumber = genereraccountNumber();
+    } while (accountNumberAttributed(accountNumber, clients, *nbClients));
+    newCustomer.reference = accountNumber;
 
-    // Ajout du nouveau client à la liste des clients
-    clients[*nbClients] = nouveauClient;
+    // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients++;
 
-    // Enregistrement du nouveau client dans un fichier
+    // Save the new client in a file
     char fileName[20];
-    sprintf(fileName, "%d.dat", numeroCompte);
+    sprintf(fileName, "%d.dat", accountNumber);
 
     char *folderPath = "clientFolder/";
     char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
 
-    // Construit le chemin complet du file
+    // Builds the complete path of the file
     strcpy(filePath, folderPath);
     strcat(filePath, fileName);
 
     FILE *file = fopen(filePath, "wb");
     if (file == NULL)
     {
-        printf("Erreur lors de l'enregistrement du nouveau client.\n");
+        printf("Error while registering the new customer.\n");
         return;
     }
-    fwrite(&nouveauClient, sizeof(Customer), 1, file);
+    fwrite(&newCustomer, sizeof(Customer), 1, file);
     fclose(file);
 
-    printf("Votre compte a été créé avec succès.\n");
-    printf("Voici votre numéro de compte: %d\n", numeroCompte);
+    printf("Your account has been successfully created.\n");
+    printf("This is your account number: %d\n", accountNumber);
     printf("\n");
 }
 
 void accountAcces(Customer clients[], int nbClients)
 {
-    int numeroCompte = 0;
+    int accountNumber = 0;
 
-    printf("Entrez votre numéro de compte: ");
-    scanf("%d", &numeroCompte);
+    printf("Enter your account number: ");
+    scanf("%d", &accountNumber);
     printf("\n");
 
-    // Recherche du client correspondant au numéro de compte
+    char pswd[SIZE];
+
+    printf("Enter your password: ");
+    scanf("%s", pswd);
+    printf("\n");
+
+    // Search for the client corresponding to the account number
     int i;
     for (i = 0; i < nbClients; i++)
     {
-        if (clients[i].reference == numeroCompte)
+        if (clients[i].reference == accountNumber && strcmp(clients[i].password, pswd) == 0)
         {
-            printf("Bonjour %s %s.\n", clients[i].name, clients[i].firstName);
-            printf("Historique des achats:\n");
+            printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
+            printf("Purchase history:\n");
             break;
         }
     }
 
     if (i == nbClients)
     {
-        printf("Numéro de compte invalide.\n");
+        printf("Invalid account number.\n");
     }
     printf("\n");
 }
 
-void deleteFile(int numeroCompte)
+void deleteFile(int accountNumber)
 {
     char fileName[20];
-    sprintf(fileName, "%d.dat", numeroCompte);
+    sprintf(fileName, "%d.dat", accountNumber);
 
     char *folderPath = "clientFolder/";
     char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
@@ -117,57 +124,54 @@ void deleteFile(int numeroCompte)
     strcat(filePath, fileName);
     if (remove(filePath) == 0)
     {
-        printf("Votre compte %d a été supprimé avec succès.\n", numeroCompte);
+        printf("Your %d account has been successfully deleted.\n", accountNumber);
     }
     else
     {
-        perror("Erreur lors de la suppression du fichier");
+        perror("Error while deleting the file");
     }
 }
 
 void deleteAccount(Customer clients[], int nbClients)
 {
-    int numeroCompte = 0;
+    int accountNumber = 0;
 
-    printf("Entrez votre numéro de compte: ");
-    scanf("%d", &numeroCompte);
+    printf("Enter your account number: ");
+    scanf("%d", &accountNumber);
     printf("\n");
 
-    if (numeroCompteExiste(numeroCompte, clients, nbClients))
+    if (accountNumberAttributed(accountNumber, clients, nbClients))
     {
         int choix = 0;
         do
         {
-            printf("Voulez vous supprimer votre compte\n");
-            printf("1. Valider\n");
-            printf("2. Annuler\n");
+            printf("Do you want to delete your account\n");
+            printf("1. Validate\n");
+            printf("2. Cancel\n");
 
-            printf("Entrez votre choix: ");
+            printf("Enter your choice: ");
             scanf("%d", &choix);
             printf("\n");
             switch (choix)
             {
-            case 1: // S'identifier
-                deleteFile(numeroCompte);
+            case 1: // Deleting file 
+                deleteFile(accountNumber);
                 return;
 
-            case 2: // Créer un nouveau compte
+            case 2: // Cancel
                 printf("Annulation ...\n");
                 break;
             }
         } while (choix != 2);
 
-        printf("Votre numero de compte n'existe pas.\n");
+        printf("Your account number does not exist.\n");
     }
 }
-/*   delocaliser les fonctions pour les appeles
-  faire fonction pour supprimer compte en fonction de mdp
-  faire recupperation de mot de passe suivant une question que l'on choisi
-*/
+
 
 int main()
 {
-    // Chargement des clients à partir des fichiers
+    // Loading clients from files
     Customer clients[MAX_CLIENTS];
     int nbClients = 0;
 
@@ -176,7 +180,7 @@ int main()
     dossier = opendir("clientFolder");
     if (dossier == NULL)
     {
-        printf("Erreur lors de l'ouverture du dossier des clients.\n");
+        printf("Error when opening the client file.\n");
         return 1;
     }
 
@@ -191,7 +195,7 @@ int main()
         char *folderPath = "clientFolder/";
         char *filePath = malloc(strlen(folderPath) + strlen(fileName) + 1);
 
-        // Construit le chemin complet du file
+        // Builds the complete path of the file
         strcpy(fileName, entree->d_name);
         strcpy(filePath, folderPath);
         strcat(filePath, fileName);
@@ -199,7 +203,7 @@ int main()
         FILE *file = fopen(filePath, "rb");
         if (file == NULL)
         {
-            printf("Erreur lors de l'ouverture du file %s.\n", fileName);
+            printf("Error when opening the file %s.\n", fileName);
             continue;
         }
 
@@ -210,38 +214,38 @@ int main()
     }
     closedir(dossier);
 
-    // Menu principal
+    // Main menu
     int choix;
     do
     {
-        printf("MENU PRINCIPAL\n");
-        printf("1. S'identifier\n");
-        printf("2. Créer un nouveau compte\n");
-        printf("3. Supprimer un compte\n");
-        printf("4. Quitter\n");
-        printf("Entrez votre choix: ");
+        printf("MAIN MENU\n");
+        printf("1. Register\n");
+        printf("2. Create a new account\n");
+        printf("3. Delete an account\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choix);
         printf("\n");
         switch (choix)
         {
-        case 1: // S'identifier
+        case 1: // Identify yourself
             accountAcces(clients, nbClients);
             break;
 
-        case 2: // Créer un nouveau compte
+        case 2: // Create a new account
             accountRegister(clients, &nbClients);
             break;
 
-        case 3:
+        case 3: // Delete account
             deleteAccount(clients, nbClients);
             break;
 
-        case 4: // Quitter
-            printf("Au revoir!\n");
+        case 4: // Exit
+            printf("Goodbye!\n");
             break;
 
         default:
-            printf("Choix invalide.\n");
+            printf("Invalid choice.\n");
             printf("\n");
             break;
         }
