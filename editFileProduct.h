@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "structFile.c"
+#include "structFile.h"
 
 // Function to check if there is place available.
 
@@ -283,8 +283,6 @@ void quickSort(Product tab[], int start, int end)
         quickSort(tab, j + 1, end);
     }
 }
-
-
 
 // Function to test that the above functions work well during development.
 

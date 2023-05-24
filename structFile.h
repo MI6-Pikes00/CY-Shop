@@ -31,3 +31,11 @@ typedef struct
     float price;
     int quantity;
 } Panier;
+
+void clearConsole() {
+    #ifdef _WIN32
+        system("cls"); // Pour Windows
+    #else
+        system("clear"); // Pour Linux et macOS
+    #endif
+}
