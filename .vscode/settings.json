@@ -40,5 +40,6 @@
   },
   "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
     "clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling"
-  ]
+  ],
+  "C_Cpp_Runner.showCompilationTime": false
 }

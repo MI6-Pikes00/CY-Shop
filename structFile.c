@@ -23,3 +23,11 @@ typedef struct
     int nbPurchase;
     int reference;
 } Customer;
+
+typedef struct
+{
+    char name[SIZE];
+    int reference;
+    float price;
+    int quantity;
+} Panier;

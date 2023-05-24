@@ -98,8 +98,7 @@ void accountAcces(Customer clients[], int nbClients)
     {
         if (clients[i].reference == accountNumber && strcmp(clients[i].password, pswd) == 0)
         {
-            printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
-            printf("Purchase history:\n");
+            //appeller la fonction main de purchase
             break;
         }
     }
@@ -169,7 +168,7 @@ void deleteAccount(Customer clients[], int nbClients)
 }
 
 
-int main()
+/* int main()
 {
     // Loading clients from files
     Customer clients[MAX_CLIENTS];
@@ -253,3 +252,4 @@ int main()
 
     return 0;
 }
+ */
