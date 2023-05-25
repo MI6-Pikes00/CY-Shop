@@ -34,14 +34,5 @@
     "**/.vscode/**"
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
-  "files.associations": {
-    "*.c": "c",
-    "stdio.h": "c",
-    "string.h": "c",
-    "structfile.h": "c"
-  },
-  "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
-    "clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling"
-  ],
   "C_Cpp_Runner.showCompilationTime": false
 }

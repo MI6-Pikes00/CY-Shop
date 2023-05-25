@@ -1,1 +1,0 @@
-printf(" bonsoirrrrrzeoihrzeoirhezoi  %d\n", nbClients);

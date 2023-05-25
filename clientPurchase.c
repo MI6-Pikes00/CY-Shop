@@ -1,0 +1,164 @@
+#include "clientPurchase.h"
+#include "editFileProduct.h"
+#include <stdio.h>
+#include <string.h>
+
+void purchase(Customer clients[], int nbClients, int i)
+{   
+    Product products[100];
+    int nb_products = 0;
+    loadProduct(products, &nb_products, "products.txt");
+
+    printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
+    Panier panier[P];
+    int nbItem = 0;
+    int choix;
+    int c;
+    int choixpouraddaupanier;
+    int q;
+
+    do
+    {
+        printf("\n");
+        printf("1. Purchase history\n");
+        printf("2. Panier (%d)\n", nbItem);
+        printf("3. Recherche article\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choix);
+        printf("\n");
+
+        switch (choix)
+        {
+        case 1: // Print purchase history
+            clearConsole();
+            printf("Purchase history:\n");
+            for (int j = 0; j < clients[i].nbPurchase; j++)
+            {
+                printf("%d", clients[i].purchase[j]);
+            }
+            break;
+
+        case 2: // Access to the card
+            clearConsole();
+            do
+            {
+                if (nbItem == 0)
+                {
+                    printf("Votre panier est vide\n");
+                }
+                else
+                {
+                    float ptotal = 0;
+                    for (int i = 0; i < nbItem; i++)
+                    {
+                        printf("%s ", panier[i].name);
+                        printf("%d ", panier[i].quantity);
+                        printf("%f\n", panier[i].price);
+                        ptotal += panier[i].price;
+                    }
+                    printf("Total %f\n", ptotal);
+                }
+                printf("\n");
+                printf("1. Validé\n");
+                printf("2. Exit\n");
+                printf("Enter your choice: ");
+                scanf("%d", &choix);
+                printf("\n");
+
+                switch (choix)
+                {
+                case 1:
+                    printf("Validate panier process en cours\n");
+                    break;
+
+                case 2:
+                    printf("Return\n");
+                    clearConsole();
+                    break;
+
+                default:
+                    break;
+                }
+
+            } while (choix != 2);
+            break;
+
+        case 3: // Menu to search object to buy
+            clearConsole();
+            for (int i = 0; i < nb_products; i++)
+            {
+                if (products[i].quantity > 0)
+                {
+                    printf("\tName : %s", products[i].name);
+                    printf("\tReference : %d", products[i].reference);
+                    printf("\tQuantity : %d\n", products[i].quantity);
+                }
+            }
+
+            do
+            {
+                printf("\n");
+                printf("1. Add to panier\n");
+                printf("2. Exit\n");
+                printf("Enter your choice: ");
+                scanf("%d", &choix);
+                printf("\n");
+
+                switch (choix)
+                {
+                case 1:
+                    clearConsole();
+                    printf("Enter the reference: ");
+                    scanf("%d", &choixpouraddaupanier);
+
+                    printf("Enter the quantity you wants ");
+                    scanf("%d", &q);
+
+                    for (int i = 0; i < nb_products; i++)
+                    {
+                        if (products[i].reference == choixpouraddaupanier)
+                        {
+                            if (products[i].quantity - q >= 0)
+                            {
+                                strcpy(panier[nbItem].name, products[i].name);
+                                panier[nbItem].reference = products[i].reference;
+                                panier[nbItem].price = products[i].price;
+                                panier[nbItem].quantity = q;
+                                nbItem++;
+                                printf("Added succesfully to panier\n");
+                            }
+                            else
+                            {
+                                printf("Saisir une quantité plus base pas assez de stocks \n");
+                            }
+                            
+                            
+                        }
+                    }
+                    break;
+
+                case 2: // Exit
+                    printf("Returning in connection.");
+                    clearConsole();
+                    break;
+
+                default:
+                    printf("Invalid choice.\n");
+                    printf("\n");
+                    break;
+                }
+            } while (choix != 2);
+            break;
+        case 4: // Exit
+            printf("Déconection");
+            clearConsole();
+            break;
+
+        default:
+            printf("Invalid choice.\n");
+            printf("\n");
+            break;
+        }
+    } while (choix != 4);
+}

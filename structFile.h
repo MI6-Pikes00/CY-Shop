@@ -1,6 +1,10 @@
-#include <stdio.h>
+#ifndef HEADER_STRUCTFILE
+#define HEADER_STRUCTFILE 1
+
 #define SIZE 100
 #define SHOP 1000
+#define MAX_CLIENTS 1000 
+#define P 1000           
 
 // Defition of the product structure
 typedef struct
@@ -32,10 +36,5 @@ typedef struct
     int quantity;
 } Panier;
 
-void clearConsole() {
-    #ifdef _WIN32
-        system("cls"); // Pour Windows
-    #else
-        system("clear"); // Pour Linux et macOS
-    #endif
-}
+void clearConsole();
+#endif

@@ -1,5 +1,4 @@
-/*
-- Il faut reucpper le clients connecter + liste du stock dans un main menu:
+
     -recherche produit par nom / reference
     -Panier sous forme de liste reference + prix (Ne pas oublier de faire le total du prix)=
         -S'initialise a chaque connection
@@ -10,6 +9,11 @@
     -Indication si le produit n'est plus en stock "Unavailable"
     -Point de fidéliter a partir d'un certains montant ou suivant le produit (pas obligatoire)
     -Categorie de piece de voiture ce baser sur les site de casse
-*/
+
+
+-Faire make file
+-Revoir si je ne peux pas sépparé les fichiers
+-Mettre des commentaires dans les fonctions
+
 
 
