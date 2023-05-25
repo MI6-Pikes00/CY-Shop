@@ -1,6 +1,6 @@
-bmw 2108 0 LARGE 4 
 mercedes 7724 1 LARGE 4 
 citroen 4976 3 SMALL 1 
 wv 2188 3 LARGE 4 
 alfa 3936 4 MEDIUM 2 
+bmw 2108 10 LARGE 4 
 Nissan 4970 10 LARGE 4 

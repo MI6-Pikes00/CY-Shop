@@ -1,11 +1,17 @@
 #include "structFile.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 
 void clearConsole() {
-    #ifdef _WIN32
-    #include <windows.h>
-        system("cls"); // Pour Windows
-    #else
-        #include <stdio.h>
-        printf("\033[H\033[J"); // Pour Linux et macOS
-    #endif
+    system("cls"); // Pour Windows
 }
+
+#else
+
+void clearConsole() {
+    printf("\033[H\033[J"); // Pour Linux et macOS
+}
+
+#endif

@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/lucletailleur/Desktop/Projet/Projet-preing1",
-      "program": "/Users/lucletailleur/Desktop/Projet/Projet-preing1/build/Debug/outDebug"
+      "cwd": "/Users/lucletailleur/Desktop/Projet/Projet-preing1/clientFolder",
+      "program": "/Users/lucletailleur/Desktop/Projet/Projet-preing1/clientFolder/build/Debug/outDebug"
     }
   ]
 }

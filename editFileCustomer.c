@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 
-void loadCustomer(Customer clients[],  int nbClients){
+void loadCustomer(Customer clients[MAX_CLIENTS],  int *nbClients){
     // Loading clients from files
 
     DIR *dossier;
@@ -36,16 +36,14 @@ void loadCustomer(Customer clients[],  int nbClients){
         FILE *file = fopen(filePath, "rb");
         if (file == NULL)
         {
+            free(filePath);
             printf("Error when opening the file %s.\n", fileName);
             continue;
         }
-
-        fread(&clients[nbClients], sizeof(Customer), 1, file);
+        fread(&clients[*nbClients], sizeof(Customer), 1, file);
         fclose(file);
-
         free(filePath);
-        printf("done");
-        nbClients++;
+        *nbClients+=1;
     }
     closedir(dossier);
 }
@@ -96,17 +94,10 @@ void accountRegister(Customer clients[], int *nbClients)
     *nbClients+=1;
 
     // Save the new client in a file
-    char fileName[20];
-    sprintf(fileName, "%d.dat", accountNumber);
+    char fileName[25];
+    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
 
-    char *folderPath = "clientFolder/";
-    char *filePath = (char *)malloc(strlen(folderPath) + strlen(fileName) + 1);
-
-    // Builds the complete path of the file
-    strcpy(filePath, folderPath);
-    strcat(filePath, fileName);
-
-    FILE *file = fopen(filePath, "wb");
+    FILE *file = fopen(fileName, "wb");
     if (file == NULL)
     {
         printf("Error while registering the new customer.\n");
@@ -114,7 +105,6 @@ void accountRegister(Customer clients[], int *nbClients)
     }
     fwrite(&newCustomer, sizeof(Customer), 1, file);
     fclose(file);
-    free(filePath);
 
     printf("Your account has been successfully created.\n");
     printf("This is your account number: %d\n", accountNumber);
@@ -123,16 +113,10 @@ void accountRegister(Customer clients[], int *nbClients)
 
 void deleteFile(int accountNumber)
 {
-    char fileName[20];
-    sprintf(fileName, "%d.dat", accountNumber);
+    char fileName[25];
+    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
 
-    char *folderPath = "clientFolder/";
-    char *filePath = (char *)malloc(strlen(folderPath) + strlen(fileName) + 1);
-
-    // Construit le chemin complet du file
-    strcpy(filePath, folderPath);
-    strcat(filePath, fileName);
-    if (remove(filePath) == 0)
+    if (remove(fileName) == 0)
     {
         printf("Your %d account has been successfully deleted.\n", accountNumber);
     }
@@ -140,7 +124,6 @@ void deleteFile(int accountNumber)
     {
         perror("Error while deleting the file");
     }
-    free(filePath);
 }
 
 void deleteAccount(Customer clients[], int nbClients)
