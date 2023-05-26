@@ -181,16 +181,13 @@ int accountAcces(Customer clients[], int nbClients)
     for (i = 0; i < nbClients; i++)
     {
         if (clients[i].reference == accountNumber && strcmp(clients[i].password, pswd) == 0)
-        {
+        {   
+            printf("LA VALEUR DE I EST %d\n", i);
+            printf("CONDITION DANS ACCOUNT ACCES\n");
             return i;
         }
     }
-
-    if (i == nbClients)
-    {
-        printf("Invalid account number.\n");
-        return 0;
-    }
+    printf("Invalid account number.\n");
+    return -1;
     printf("\n");
-    return -11;
 }

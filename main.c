@@ -14,7 +14,7 @@ int main()
 
     Product products[100];
     int nb_products = 0;
-
+    int i = 0;
     int choix = 0;
     while (1)
     {
@@ -86,9 +86,9 @@ int main()
                 switch (choix)
                 {
                 case 1: // Identify yourself
-                    clearConsole();
-                    int i = 0;
-                    if ((i = accountAcces(clients, nbClients) != 0))
+                    //clearConsole();
+                    i = accountAcces(clients, nbClients);
+                    if ((i != -1))
                     {
                         purchase(clients, nbClients, i);
                     }
