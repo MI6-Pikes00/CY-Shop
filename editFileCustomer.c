@@ -89,7 +89,7 @@ void accountRegister(Customer clients[], int *nbClients)
         accountNumber = genereraccountNumber();
     } while (accountNumberAttributed(accountNumber, clients, *nbClients));
     newCustomer.reference = accountNumber;
-
+    newCustomer.nbPurchase = -1;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients+=1;
 
@@ -182,8 +182,6 @@ int accountAcces(Customer clients[], int nbClients)
     {
         if (clients[i].reference == accountNumber && strcmp(clients[i].password, pswd) == 0)
         {   
-            printf("LA VALEUR DE I EST %d\n", i);
-            printf("CONDITION DANS ACCOUNT ACCES\n");
             return i;
         }
     }

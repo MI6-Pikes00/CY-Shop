@@ -86,6 +86,9 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
         printf("Put the quantity : ");
         scanf("%d", &products[*nb_products].quantity);
 
+        printf("Put the price : ");
+        scanf("%f", &products[*nb_products].price);
+
         // Loop to check if the recovery of input is correct
         do
         {
