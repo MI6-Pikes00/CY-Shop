@@ -16,6 +16,10 @@ int main()
     int nb_products = 0;
     int i = 0;
     int choix = 0;
+
+    loadProduct(products, &nb_products, "products.txt");
+
+
     while (1)
     {
         printf("MAIN MENU\n");
@@ -30,9 +34,8 @@ int main()
         case 1: // Gestion mode
             while (1)
             {
-                loadProduct(products, &nb_products, "products.txt");
-
                 quickSort(products, 0, nb_products - 1);
+
                 saveProduct(products, nb_products, "products.txt");
 
                 printf("\n");
