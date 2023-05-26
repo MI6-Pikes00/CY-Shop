@@ -1,5 +1,6 @@
 
     -Tries produits par reference ou par prix (Croissant et décroissant)
+    
     -Historique d'achat erreur de segmentation
     -Afficher les 3 derniers produits acheter à la conexion
     -Passer les variables en anglais

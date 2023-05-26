@@ -14,23 +14,25 @@ int main()
 
     Product products[SIZE_SHOP];
     int nb_products = 0;
+
     int i = 0;
-    int choix = 0;
+    int choice = 0;
 
     loadProduct(products, &nb_products, "products.txt");
 
     while (1)
     {
         printf("MAIN MENU\n");
-        printf("1. Purchase mode\n");
+        printf("1. Stock management\n");
         printf("2. Customer\n");
         printf("3. Exit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choix);
+        scanf("%d", &choice);
         printf("\n");
-        switch (choix)
+        switch (choice)
         {
         case 1: // Gestion mode
+            int choice1 = 0;
             while (1)
             {
                 quickSort(products, 0, nb_products - 1);
@@ -45,10 +47,9 @@ int main()
                 printf("3. Modifies product quantity\n");
                 printf("4. Quit\n");
 
-                int choice;
-                scanf("%d", &choice);
+                scanf("Enter your choice: %d", &choice1);
 
-                switch (choice)
+                switch (choice1)
                 {
                 case 1:
                     printf("Products list:\n");
@@ -69,25 +70,27 @@ int main()
                     break;
 
                 default:
-                    printf("Erreur : choice invalide\n");
+                    printf("Invalid choice.\n");
+                    break;
                 }
             };
 
         case 2: // Purchase mode
+            int choice2 = 0;
             while (1)
             {
                 loadCustomer(clients, &nbClients);
                 printf("MAIN MENU\n");
-                printf("1. Register\n");
-                printf("2. Create a new account\n");
-                printf("3. Delete an account\n");
+                printf("1. Login\n");
+                printf("2. Register\n");
+                printf("3. Delete account\n");
                 printf("4. Exit\n");
                 printf("Enter your choice: ");
-                scanf("%d", &choix);
+                scanf("%d", &choice2);
                 printf("\n");
-                switch (choix)
+                switch (choice2)
                 {
-                case 1: // Identify yourself
+                case 1: // Login
                     // clearConsole();
                     i = accountAcces(clients, nbClients);
                     if ((i != -1))
@@ -96,7 +99,7 @@ int main()
                     }
                     break;
 
-                case 2: // Create a new account
+                case 2: // Register
                     clearConsole();
                     accountRegister(clients, &nbClients);
                     break;

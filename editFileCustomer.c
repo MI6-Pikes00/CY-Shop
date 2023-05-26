@@ -150,6 +150,7 @@ void deleteAccount(Customer clients[], int nbClients)
             {
             case 1: // Deleting file
                 deleteFile(accountNumber);
+                printf("DONE !\n");
                 return;
 
             case 2: // Cancel

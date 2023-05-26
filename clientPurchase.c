@@ -5,8 +5,9 @@
 
 void purchase(Customer clients[], int nbClients, int i)
 {
-    Product products[100];
+    Product products[SIZE_SHOP];
     int nb_products = 0;
+    
     loadProduct(products, &nb_products, "products.txt");
 
     printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
@@ -75,13 +76,15 @@ void purchase(Customer clients[], int nbClients, int i)
                 switch (choix)
                 {
                 case 1:
-                    printf("Validate panier process en cours ...\n");
+                    printf("Validate process ...\n");
                     printf("THANKS FOR YOUR ORDER\n");
 
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
+                        printf("boucle 1");
                         if (clients[i].nbPurchase == -1)
                         {
+
                             for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
                             {
                                 clients[i].purchase[ihistorique] = panier[ipanier].reference;
@@ -95,6 +98,10 @@ void purchase(Customer clients[], int nbClients, int i)
                                 clients[i].nbPurchase += 1;
                             }
                     }
+
+                        /* Rezise stock about order */
+
+                    saveProduct(products, nb_products, "products.txt");
 
                     break;
 
@@ -134,7 +141,6 @@ void purchase(Customer clients[], int nbClients, int i)
                 switch (choix)
                 {
                 case 1:
-                    clearConsole();
                     printf("Enter the reference: ");
                     scanf("%d", &choixpouraddaupanier);
 
