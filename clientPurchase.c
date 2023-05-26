@@ -5,6 +5,8 @@
 
 void purchase(Customer clients[], int nbClients, int i)
 {
+    // 
+
     Product products[SIZE_SHOP];
     int nb_products = 0;
     
@@ -22,6 +24,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
     do
     {
+        // Printing Stock Management Menu
         printf("\n");
         printf("1. Purchase history\n");
         printf("2. Panier (%d)\n", nbItem);
@@ -79,9 +82,10 @@ void purchase(Customer clients[], int nbClients, int i)
                     printf("Validate process ...\n");
                     printf("THANKS FOR YOUR ORDER\n");
 
+                    // Adding product to the order history of an account
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
-                        printf("boucle 1");
+                        printf("boucle 1"); // Just to test
                         if (clients[i].nbPurchase == -1)
                         {
 
@@ -131,8 +135,9 @@ void purchase(Customer clients[], int nbClients, int i)
 
             do
             {
+                // Add to card 
                 printf("\n");
-                printf("1. Add to panier\n");
+                printf("1. Add to card\n");
                 printf("2. Exit\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choix);
