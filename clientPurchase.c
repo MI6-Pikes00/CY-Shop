@@ -10,7 +10,7 @@ void purchase(Customer clients[], int nbClients, int i)
     loadProduct(products, &nb_products, "products.txt");
 
     printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
-    Panier panier[P];
+    Panier panier[SIZE_CARD];
     int nbItem = 0;
     int choix;
     int ipanier = 0;
@@ -35,11 +35,12 @@ void purchase(Customer clients[], int nbClients, int i)
         case 1: // Print purchase history
             clearConsole();
             printf("Purchase history:\n");
-            if(clients[i].nbPurchase != -1){
-            for (int j = 0; j < clients[i].nbPurchase; j++)
+            if (clients[i].nbPurchase != -1)
             {
-                printf("%d", clients[i].purchase[j]);
-            }
+                for (int j = 0; j < clients[i].nbPurchase; j++)
+                {
+                    printf("%d", clients[i].purchase[j]);
+                }
             }
             printf("Vous n'avez pas encore fait d'achat sur notre site web.\n");
             break;
@@ -79,8 +80,10 @@ void purchase(Customer clients[], int nbClients, int i)
 
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
-                        if(clients[i].nbPurchase == -1){
-                            for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++){
+                        if (clients[i].nbPurchase == -1)
+                        {
+                            for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
+                            {
                                 clients[i].purchase[ihistorique] = panier[ipanier].reference;
                                 clients[i].nbPurchase += 1;
                             }

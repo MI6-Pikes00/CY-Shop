@@ -22,7 +22,7 @@ int placeAvailabe(Product products[], int nb_products)
 
 void stockVerification(Product products[], int nb_products)
 {
-    printf("Stock place available : %d \n", SHOP - placeAvailabe(products, nb_products));
+    printf("Stock place available : %d \n", SIZE_SHOP - placeAvailabe(products, nb_products));
 
     printf("\n");
 
@@ -76,7 +76,7 @@ int checkReference(Product products[], int nb_products, int ref)
 void addProduct(Product products[], int *nb_products) // We put *nb_products, because we are modifying the value at the end
 {
     // Condition to check if there is place available.
-    if (SHOP - placeAvailabe(products, *nb_products) > 0)
+    if (SIZE_SHOP - placeAvailabe(products, *nb_products) > 0)
     {
         int b = 1;
 
@@ -95,7 +95,7 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
             int p = 0;
             printf("Put the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
             scanf("%d", &p);
-            if (SHOP - (placeAvailabe(products, *nb_products) + (products[*nb_products].quantity * p)) > 0)
+            if (SIZE_SHOP - (placeAvailabe(products, *nb_products) + (products[*nb_products].quantity * p)) > 0)
             {
                 // Case who attribute good variable to input
                 switch (p)
@@ -231,7 +231,7 @@ void modifiesQuantity(Product products[], int nb_products)
             printf("Put new quantity to add : ");
             scanf("%d", &q);
             // Condition verify if plave available.
-            if (SHOP - (placeAvailabe(products, nb_products) + (products[i].place * (products[i].quantity + q))) >= 0)
+            if (SIZE_SHOP - (placeAvailabe(products, nb_products) + (products[i].place * (products[i].quantity + q))) >= 0)
             {
                 products[i].quantity += q;
                 printf("Quantity successfully modified.\n");
@@ -239,7 +239,7 @@ void modifiesQuantity(Product products[], int nb_products)
             else
             {
                 printf("No more place available !\n");
-                printf("You just have %d place left.\n", SHOP - (placeAvailabe(products, nb_products)));
+                printf("You just have %d place left.\n", SIZE_SHOP - (placeAvailabe(products, nb_products)));
             }
             return;
         }
@@ -286,4 +286,3 @@ void quickSort(Product tab[], int start, int end)
 }
 
 // Function to test that the above functions work well during development.
-

@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-void loadCustomer(Customer clients[MAX_CLIENTS],  int *nbClients){
+void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
+{
     // Loading clients from files
 
     DIR *dossier;
@@ -14,7 +14,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS],  int *nbClients){
     if (dossier == NULL)
     {
         printf("Error when opening the client file.\n");
-        return ;
+        return;
     }
 
     while ((entree = readdir(dossier)) != NULL)
@@ -43,7 +43,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS],  int *nbClients){
         fread(&clients[*nbClients], sizeof(Customer), 1, file);
         fclose(file);
         free(filePath);
-        *nbClients+=1;
+        *nbClients += 1;
     }
     closedir(dossier);
 }
@@ -91,7 +91,7 @@ void accountRegister(Customer clients[], int *nbClients)
     newCustomer.reference = accountNumber;
     newCustomer.nbPurchase = -1;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
-    *nbClients+=1;
+    *nbClients += 1;
 
     // Save the new client in a file
     char fileName[25];
@@ -181,7 +181,7 @@ int accountAcces(Customer clients[], int nbClients)
     for (i = 0; i < nbClients; i++)
     {
         if (clients[i].reference == accountNumber && strcmp(clients[i].password, pswd) == 0)
-        {   
+        {
             return i;
         }
     }

@@ -2,9 +2,9 @@
 #define HEADER_STRUCTFILE 1
 
 #define SIZE 100
-#define SHOP 1000
+#define SIZE_SHOP 1000
 #define MAX_CLIENTS 1000 
-#define P 1000           
+#define SIZE_CARD 1000           
 
 // Defition of the product structure
 typedef struct

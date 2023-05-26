@@ -12,13 +12,12 @@ int main()
     Customer clients[MAX_CLIENTS];
     int nbClients = 0;
 
-    Product products[100];
+    Product products[SIZE_SHOP];
     int nb_products = 0;
     int i = 0;
     int choix = 0;
 
     loadProduct(products, &nb_products, "products.txt");
-
 
     while (1)
     {
@@ -89,7 +88,7 @@ int main()
                 switch (choix)
                 {
                 case 1: // Identify yourself
-                    //clearConsole();
+                    // clearConsole();
                     i = accountAcces(clients, nbClients);
                     if ((i != -1))
                     {
