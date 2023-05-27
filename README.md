@@ -7,7 +7,7 @@ Ceci est notre projet d'informatique de fin de semestre dans le cadre de notre c
 - [Content](#Content) Explain what the project is.
 - [Preview](#Preview) Pictures of the program while runing.
 - [Instructions](#Instructions) All informations that you need to compile and run the program.
-- [Known Bugs](#KnownBugs) A list of known bugs.
+- [Bugs](#Bugs) A list of known bugs.
 
 ## Content
 
