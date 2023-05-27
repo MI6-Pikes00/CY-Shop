@@ -10,4 +10,5 @@ void deleteFile(int accountNumber);
 void deleteAccount(Customer clients[], int nbClients);
 int accountAcces(Customer clients[], int nbClients);
 void saveClient(Customer client[], int i);
+void copyIntArray(const int source[], int destination[], int length);
 #endif

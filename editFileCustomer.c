@@ -204,13 +204,28 @@ int accountAcces(Customer clients[], int nbClients)
 
 // Function that allows to write to the text file where the data are stored.
 
+void copyIntArray(const int source[], int destination[], int length) {
+    for (int i = 0; i < length; i++) {
+        destination[i] = source[i];
+    }
+}
+
+
 void saveClient(Customer client[], int i)
 {
+    Customer tempCustomer;
+    strcpy(tempCustomer.firstName, client[i].firstName);
+    strcpy(tempCustomer.name, client[i].name);
+    strcpy(tempCustomer.password, client[i].password);
+    copyIntArray(client[i].purchase, tempCustomer.purchase, client[i].nbPurchase );
+    tempCustomer.nbPurchase = client[i].nbPurchase;
+    tempCustomer.reference = client[i].reference ;
+
     int accountNumber = client[i].reference;
     char fileName[25];
     sprintf(fileName, "clientFolder/%d.dat", accountNumber);
     // Open the file in writing mode.
-    FILE *file = fopen(fileName, "wb+");
+    FILE *file = fopen(fileName, "wb");
     // Condition so the function printf error if the file is not found.
     if (file == NULL)
     {
@@ -218,7 +233,7 @@ void saveClient(Customer client[], int i)
         return;
     }
     // Loop who print all information in the file. (Rewrite all)
-    fwrite(&client, sizeof(Customer), 1, file);
+    fwrite(&tempCustomer, sizeof(Customer), 1, file);
 
     // Close the file after the ending
     fclose(file);
