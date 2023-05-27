@@ -53,3 +53,4 @@ The customer mode only allows you to delete your customer account from the datab
 
 - Problem with *Add Product*: When you add a product to the stock, the scanf don't like when you put words with space. So, with a space it doesn't work. 
 - Problem with *Search by Reference*: The search by Name work but the search by reference doesn't work correctly.
+- Problem whem approuved cart, the program crash so purchase history is not completed
