@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void clearCart()
-{
-}
 
 // Stock management menu
 void purchase(Customer clients[], int nbClients, int i)
@@ -17,7 +14,6 @@ void purchase(Customer clients[], int nbClients, int i)
     // Loading of products in stock
     loadProduct(products, &nb_products, "products.txt");
 
-    printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
     Panier panier[SIZE_CARD];
 
     // Setup variables
@@ -33,9 +29,11 @@ void purchase(Customer clients[], int nbClients, int i)
     {
         // Printing Stock Management Menu
         printf("\n");
+        printf("Purchase Menu\n");
+        printf("-------------- \n");
         printf("1. Purchase history\n");
-        printf("2. Panier (%d)\n", nbItem);
-        printf("3. Recherche article\n");
+        printf("2. Cart (%d)\n", nbItem);
+        printf("3. See Products\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choix);
@@ -45,9 +43,10 @@ void purchase(Customer clients[], int nbClients, int i)
         {
         case 1: // Print purchase history
             clearConsole();
-            printf("Purchase history:\n");
+            
             if (clients[i].nbPurchase != 0)
             {
+                printf("Purchase history:\n");
                 for (int j = 0; j < clients[i].nbPurchase; j++)
                 {
                     printf("%d ", clients[i].purchase[j]);
@@ -55,7 +54,7 @@ void purchase(Customer clients[], int nbClients, int i)
             }
             else
             {
-                printf("Vous n'avez pas encore fait d'achat sur notre site web.\n");
+                printf("\nNo previous order.\n");
             }
 
             break;
@@ -66,58 +65,63 @@ void purchase(Customer clients[], int nbClients, int i)
             {
                 if (nbItem == 0)
                 {
-                    printf("Votre panier est vide\n");
+                    printf("Your cart is empty.\n");
                 }
                 else
                 {
                     // Print the cart
                     float ptotal = 0;
                     for (int i = 0; i < nbItem; i++)
-                    {
-                        printf("%s ", panier[i].name);
-                        printf("%d ", panier[i].quantity);
-                        printf("%f\n", panier[i].price);
+                    {   
+                        printf("\nProduct Name: %s", panier[i].name);
+                        printf("\nQuantity: %d ", panier[i].quantity);
+                        printf("\nPrice: %.2f$\n", panier[i].price);
                         ptotal += panier[i].price;
                     }
-                    printf("Total %f\n", ptotal);
-                }
-                printf("\n");
-                printf("1. Validé\n");
-                printf("2. Exit\n");
-                printf("Enter your choice: ");
-                scanf("%d", &choix);
-                printf("\n");
+                    printf("\nTotal: %.2f$\n", ptotal);
+                
+                    printf("\n");
+                    printf("1. Buy\n");
+                    printf("2. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choix);
+                    printf("\n");
 
-                switch (choix)
-                {
-                case 1: // Valid option
-                    printf("Validate process ...\n");
-                    printf("THANKS FOR YOUR ORDER\n");
-                    // Adding product to the order history of an account
-
-                    for (ipanier; ipanier < nbItem; ipanier++)
+                    switch (choix)
                     {
-                        clients[i].purchase[ipanier] = panier[ipanier].reference;
-                        clients[i].nbPurchase += 1;    
-                        saveClient(clients, i);
+                    case 1: // Valid option
+                        printf("Validate process ...\n");
+                        printf("THANKS FOR YOUR ORDER\n");
+                        // Adding product to the order history of an account
 
-                        /* Rezise stock after order */
+                        for (ipanier; ipanier < nbItem; ipanier++)
+                        {
+                            strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
+                            clients[i].nbPurchase += 1;
+                            saveClient(clients, i);
 
-                        modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
+                            /* Rezise stock after order */
+
+                            modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
+                        }
+
+                        saveProduct(products, nb_products, "products.txt");
+
+                        // Empty the cart
+                        memset(panier, 0, SIZE_CARD);
+                        nbItem = 0;
+
+                        break;
+
+                    case 2: // Exit option
+                        printf("Return\n");
+                        clearConsole();
+                        break;
+
+                    default:
+                        printf("Invalid choice.\n");
+                        break;
                     }
-
-                    saveProduct(products, nb_products, "products.txt");
-
-                    break;
-
-                case 2: // Exit option
-                    printf("Return\n");
-                    clearConsole();
-                    break;
-
-                default:
-                    printf("Invalid choice.\n");
-                    break;
                 }
 
             } while (choix != 2);
@@ -140,7 +144,7 @@ void purchase(Customer clients[], int nbClients, int i)
                 // Add to card
                 printf("\n");
                 printf("1. Add to card\n");
-                printf("2. Search\n"); // have to have case search
+                printf("2. Search by Name/Ref\n"); // have to have case search
                 printf("3. Exit\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choix);
@@ -152,7 +156,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     printf("Enter the reference: ");
                     scanf("%d", &choixpouraddaupanier);
 
-                    printf("Enter the quantity you wants ");
+                    printf("Enter the quantity you wants: ");
                     scanf("%d", &q);
 
                     // Method to add product to cart
@@ -177,7 +181,11 @@ void purchase(Customer clients[], int nbClients, int i)
                     }
                     break;
 
-                case 2: // Exit
+                case 2:
+
+                    break;
+
+                case 3: // Exit
                     printf("Returning in connection.");
                     clearConsole();
                     break;
@@ -187,7 +195,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     printf("\n");
                     break;
                 }
-            } while (choix != 2);
+            } while (choix != 3);
             break;
 
         case 4: // Exit

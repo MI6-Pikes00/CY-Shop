@@ -1,6 +1,7 @@
 #include "clientPurchase.h"
 #include "editFileCustomer.h"
 #include "editFileProduct.h"
+// #include "search.h"
 #include "structFile.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +26,7 @@ int main()
     int q = 0;
 
     loadProduct(products, &nb_products, "products.txt");
-    loadCustomer(clients, &nbClients);
+    
 
     while (1)
     {
@@ -41,10 +42,13 @@ int main()
         {
         case 1: // Log In
             clearConsole();
+            loadCustomer(clients, &nbClients);
             i = accountAcces(clients, nbClients);
             if ((i != -1))
             {
-                printf("MAIN MENU\n");
+                clearConsole();
+                printf("\nHello %s %s.\n", clients[i].name, clients[i].firstName);
+                printf("\n\n \tMAIN MENU\n\n");
                 printf("1. Gestion\n");
                 printf("2. Purchase\n");
                 printf("3. Customer\n");
@@ -110,7 +114,6 @@ int main()
                 case 3: // Customer mode
                     while (1)
                     {
-                        loadCustomer(clients, &nbClients);
                         printf("MAIN MENU\n");
                         printf("1. Delete account\n");
                         printf("2. Exit\n");
@@ -121,7 +124,7 @@ int main()
                         {
                         case 1: // Delete account
                             clearConsole();
-                            deleteAccount(clients, nbClients);
+                            deleteAccount(clients, nbClients, i);
                             break;
 
                         case 2: // Exit

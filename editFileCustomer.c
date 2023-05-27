@@ -10,7 +10,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
     DIR *dossier;
     struct dirent *entree;
     dossier = opendir("clientFolder");
-    
+
     // Verification of good working
     if (dossier == NULL)
     {
@@ -90,12 +90,14 @@ void accountRegister(Customer clients[], int *nbClients)
     scanf("%s", newCustomer.password);
 
     // Random generation of the account number
-    do{
+    do
+    {
         accountNumber = genereraccountNumber();
     } while (accountNumberAttributed(accountNumber, clients, *nbClients));
-    
-    // Consideration of new information 
-    newCustomer.reference = accountNumber;;
+
+    // Consideration of new information
+    newCustomer.reference = accountNumber;
+    ;
     // memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
     newCustomer.nbPurchase = 0;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
@@ -136,13 +138,9 @@ void deleteFile(int accountNumber)
 }
 
 // Fonction that allow to delete account completly
-void deleteAccount(Customer clients[], int nbClients)
+void deleteAccount(Customer clients[], int nbClients, int i)
 {
-    int accountNumber = 0;
-
-    printf("Enter your account number: ");
-    scanf("%d", &accountNumber);
-    printf("\n");
+    int accountNumber = clients[i].reference;
 
     if (accountNumberAttributed(accountNumber, clients, nbClients))
     {
@@ -161,7 +159,7 @@ void deleteAccount(Customer clients[], int nbClients)
             case 1: // Deleting file
                 deleteFile(accountNumber);
                 printf("DONE !\n");
-                return;
+                break;
 
             case 2: // Cancel
                 printf("Annulation ...\n");
@@ -204,12 +202,13 @@ int accountAcces(Customer clients[], int nbClients)
 
 // Function that allows to write to the text file where the data are stored.
 
-void copyIntArray(const int source[], int destination[], int length) {
-    for (int i = 0; i < length; i++) {
-        destination[i] = source[i];
+void copyIntArray(const char source[], char destination[], int length)
+{
+    for (int i = 0; i < length; i++)
+    {
+        strcpy(&destination[i], &source[i]);
     }
 }
-
 
 void saveClient(Customer client[], int i)
 {
@@ -217,9 +216,9 @@ void saveClient(Customer client[], int i)
     strcpy(tempCustomer.firstName, client[i].firstName);
     strcpy(tempCustomer.name, client[i].name);
     strcpy(tempCustomer.password, client[i].password);
-    copyIntArray(client[i].purchase, tempCustomer.purchase, client[i].nbPurchase );
+    copyIntArray(client[i].purchase, tempCustomer.purchase, client[i].nbPurchase);
     tempCustomer.nbPurchase = client[i].nbPurchase;
-    tempCustomer.reference = client[i].reference ;
+    tempCustomer.reference = client[i].reference;
 
     int accountNumber = client[i].reference;
     char fileName[25];

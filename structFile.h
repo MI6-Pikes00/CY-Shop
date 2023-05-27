@@ -23,7 +23,7 @@ typedef struct
     char name[SIZE];
     char firstName[SIZE];
     char password[SIZE];
-    int purchase[SIZE];
+    char purchase[SIZE];
     int nbPurchase;
     int reference;
 } Customer;
