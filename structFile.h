@@ -26,8 +26,10 @@ typedef struct
     char purchase[SIZE];
     int nbPurchase;
     int reference;
+    float sold;
 } Customer;
 
+// Defition of the cart structure
 typedef struct
 {
     char name[SIZE];

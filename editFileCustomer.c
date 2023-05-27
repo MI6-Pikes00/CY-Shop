@@ -100,6 +100,8 @@ void accountRegister(Customer clients[], int *nbClients)
     ;
     // memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
     newCustomer.nbPurchase = 0;
+    // Initial sold of new customer
+    newCustomer.sold = 500;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients += 1;
 
@@ -222,6 +224,7 @@ void saveClient(Customer client[], int i)
     copyIntArray(client[i].purchase, tempCustomer.purchase, client[i].nbPurchase);
     tempCustomer.nbPurchase = client[i].nbPurchase;
     tempCustomer.reference = client[i].reference;
+    tempCustomer.sold = client[i].sold;
 
     int accountNumber = client[i].reference;
     char fileName[25];

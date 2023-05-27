@@ -79,6 +79,7 @@ void purchase(Customer clients[], int nbClients, int i)
                         ptotal += panier[i].price;
                     }
                     printf("\nTotal: %.2f$\n", ptotal);
+                    clients[i].sold -= ptotal;
                 
                     printf("\n");
                     printf("1. Buy\n");
