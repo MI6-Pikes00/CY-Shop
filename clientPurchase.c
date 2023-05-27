@@ -84,29 +84,18 @@ void purchase(Customer clients[], int nbClients, int i)
                 case 1: // Valid option
                     printf("Validate process ...\n");
                     printf("THANKS FOR YOUR ORDER\n");
-
                     // Adding product to the order history of an account
+
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
-                        printf("boucle 1"); // Just to test
-                        if (clients[i].nbPurchase == -1)
+                        for (ihistorique; ihistorique < 3; ihistorique++)
                         {
-
-                            for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
-                            {
                                 clients[i].purchase[ihistorique] = panier[ipanier].reference;
                                 clients[i].nbPurchase += 1;
-                            }
                         }
-                        for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
-                            if (panier[ipanier].reference != clients[i].purchase[ihistorique])
-                            {
-                                clients[i].purchase[ihistorique] = panier[ipanier].reference;
-                                clients[i].nbPurchase += 1;
-                            }
+                        modifiesQuantity(products, nb_products, panier[ipanier].reference, panier[ipanier].quantity);
                     }
-
-                        /* Rezise stock about order */
+                    /* Rezise stock about order */
 
                     saveProduct(products, nb_products, "products.txt");
 
@@ -139,6 +128,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
             do
             {
+                // Add to card 
                 printf("\n");
                 printf("1. Add to card\n");
                 printf("2. Exit\n");

@@ -215,21 +215,13 @@ void loadProduct(Product products[], int *nb_products, const char *fileName)
 
 // Fuction to modifies porduct quantity by there reference.
 
-void modifiesQuantity(Product products[], int nb_products)
+void modifiesQuantity(Product products[], int nb_products, int ref, int q)
 {
-    int ref;
-    printf("Enter the reference of the product whose quantity you want to change: ");
-    scanf("%d", &ref);
-
     // loop to find the product associate with the reference
     for (int i = 0; i < nb_products; i++)
     {
         if (products[i].reference == ref)
         {
-            printf("Current quantity : %d\n", products[i].quantity);
-            int q = 0;
-            printf("Put new quantity to add : ");
-            scanf("%d", &q);
             // Condition verify if plave available.
             if (SIZE_SHOP - (placeAvailabe(products, nb_products) + (products[i].place * (products[i].quantity + q))) >= 0)
             {

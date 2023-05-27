@@ -96,8 +96,8 @@ void accountRegister(Customer clients[], int *nbClients)
     
     // Consideration of new information 
     newCustomer.reference = accountNumber;;
-    memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
-    newCustomer.nbPurchase = SIZE;
+    // memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
+    newCustomer.nbPurchase = -1;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients += 1;
 

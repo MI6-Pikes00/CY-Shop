@@ -20,6 +20,9 @@ int main()
     int choiceUn = 0;
     int choiceDeux = 0;
 
+    int ref = 0;
+    int q = 0;
+
     loadProduct(products, &nb_products, "products.txt");
 
     while (1)
@@ -61,7 +64,12 @@ int main()
                     saveProduct(products, nb_products, "products.txt");
                     break;
                 case 3:
-                    modifiesQuantity(products, nb_products);
+                    
+                    printf("Enter the reference of the product whose quantity you want to change: ");
+                    scanf("%d", &ref);
+                    printf("Put new quantity to add : ");
+                    scanf("%d", &q);
+                    modifiesQuantity(products, nb_products, ref, q);
                     saveProduct(products, nb_products, "products.txt");
                     break;
 

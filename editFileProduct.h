@@ -10,5 +10,5 @@ void displayProduct(Product products[], int nb_products);
 void quickSort(Product tab[], int start, int end);
 void saveProduct(Product products[], int nb_products, const char *fileName);
 void loadProduct(Product products[], int *nb_products, const char *fileName);
-void modifiesQuantity(Product products[], int nb_products);
+void modifiesQuantity(Product products[], int nb_products, int ref, int q);
 #endif
