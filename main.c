@@ -25,6 +25,7 @@ int main()
     int q = 0;
 
     loadProduct(products, &nb_products, "products.txt");
+    loadCustomer(clients, &nbClients);
 
     while (1)
     {
