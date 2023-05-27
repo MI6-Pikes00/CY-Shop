@@ -1,7 +1,7 @@
 # CY-Shop 
 
 
-Ceci est notre projet d'informatique de fin de semestre dans le cadre de notre cursus de préIng1 MIM à CY Tech.
+This is our end-of-semester IT project as part of our pre-Eng1 MIM course at CY Tech.
 
 ## Summary
 - [Content](#Content) Explain what the project is.
@@ -11,18 +11,18 @@ Ceci est notre projet d'informatique de fin de semestre dans le cadre de notre c
 
 ## Content
 
-Le but est de créé un programme en C permettant de gérer des stocks et des fichiers clients pour un magasin de vente de pièces détachés de voiture. 
+The goal is to create a C program to manage stocks and customer files for a car spare parts store.
 
-Le programme permet de choisir entre trois modes. Le mode de gestion, le mode d'achat ou le mode Customer. 
+The program allows you to choose between three modes. The gestion mode, the purchase mode or the customer mode.
 
-### Mode Gestion
-Le mode gestion permet d'afficher et d'augmenter les stocks actuels dans la limite de l'espace disponible *(100 places)*.
+### Gestion Mode
+The gestion mode allows you to display and increase current stocks within the limits of available space *(100 places)*.
 
-### Mode Achat 
-Le mode achat permet d'effectuer des achats à l'aide de son compte client. Il peut aussi permettre de rechercher des produits en stock à l'aide de leur nom ou de leur numéro de référence.
+### Purchase Mode
+The purchase mode allows you to make purchases using your customer account. It can also allow you to search fo products in stock using their name or reference number.
 
-### Mode Customer
-Le mode customer permet uniquement de supprimer son compte client de la base de donnée.
+### Customer Mode
+The customer mode only allows you to delete your customer account from the database.
 
 ## Preview
 
@@ -50,5 +50,5 @@ Le mode customer permet uniquement de supprimer son compte client de la base de 
 
 ## Known Bugs
 
-- Problème avec le *Delete Account*: Nécessite une deuxième entrée après la validation dans la console pour la bonne suppression du compte. 
-- Problème d'*indentation* lors de l'affichage des stocks.
+- Problem with the *Delete Account*: Requires a second entry after validation in the console for the correct deletion of the account. 
+- Problem with the *indentation* when displaying stocks.
