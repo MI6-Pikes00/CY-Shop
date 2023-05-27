@@ -26,7 +26,8 @@ The customer mode only allows you to delete your customer account from the datab
 
 ## Preview
 
-(mettre photo du programme lancé)
+![Preview images](./img/screen1.png)
+![Preview images](./img/screen2.png)
 
 
 ## Instructions
@@ -50,6 +51,5 @@ The customer mode only allows you to delete your customer account from the datab
 
 ## Known Bugs
 
-- Problem with the *Delete Account*: Requires a second entry after validation in the console for the correct deletion of the account. 
 - Problem with *Add Product*: When you add a product to the stock, the scanf don't like when you put words with space. So, with a space it doesn't work. 
 - Problem with *Search by Reference*: The search by Name work but the search by reference doesn't work correctly.

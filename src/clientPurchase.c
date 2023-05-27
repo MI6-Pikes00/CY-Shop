@@ -23,6 +23,7 @@ void purchase(Customer clients[], int nbClients, int i)
     int ihistorique = -1;
     int c;
     int choixpouraddaupanier;
+    int block = 0;
     int q;
     int in_Cart = 0;
     int in_Search_obj = 0;
@@ -78,9 +79,10 @@ void purchase(Customer clients[], int nbClients, int i)
             in_Cart = 1;
             while (in_Cart)
             {
-                if (nbItem == 0)
+                if (block == 0)
                 {
                     printf("Your cart is empty.\n");
+                    block = 1;
                 }
                 else
                 {
@@ -93,70 +95,70 @@ void purchase(Customer clients[], int nbClients, int i)
                         ptotal += panier[i].price;
                     }
                     printf("\nTotal: %.2f$\n", ptotal);
-                    clients[i].sold -= ptotal;
+                }
 
-                    printf("\n");
-                    printf("1. Buy\n");
-                    printf("2. Exit\n");
-                    printf("Enter your choice: ");
-                    int validCart = scanf("%d", &choix);
-                    if (validCart != 1)
+                printf("\n");
+                printf("1. Buy\n");
+                printf("2. Exit\n");
+                printf("Enter your choice: ");
+                int validCart = scanf("%d", &choix);
+                if (validCart != 1)
+                {
+                    while (getchar() != '\n')
                     {
-                        while (getchar() != '\n')
-                        {
-                            // clean the entrances
-                        }
+                        // clean the entrances
                     }
-                    printf("\n");
+                }
+                printf("\n");
 
-                    switch (choix)
+                switch (choix)
+                {
+                case 1: // Valid option
+                    if (clients[i].sold >= ptotal)
                     {
-                    case 1: // Valid option
-                        if (clients[i].sold >= ptotal)
+                        printf("Validate process ...\n");
+                        printf("THANKS FOR YOUR ORDER\n");
+
+                        clients[i].sold -= ptotal;
+
+                        // Adding product to the order history of an account
+
+                        for (ipanier = 0; ipanier < nbItem; ipanier++)
                         {
-                            printf("Validate process ...\n");
-                            printf("THANKS FOR YOUR ORDER\n");
+                            strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
+                            // clients[i].purchase[ipanier] = panier[ipanier].reference;
+                            clients[i].nbPurchase += 1;
+                            saveClient(clients, i);
 
-                            clients[i].sold -= ptotal;
-                            
-                            // Adding product to the order history of an account
+                            /* Rezise stock after order */
 
-                            for (ipanier = 0; ipanier < nbItem; ipanier++)
-                            {
-                                strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
-                                // clients[i].purchase[ipanier] = panier[ipanier].reference;
-                                clients[i].nbPurchase += 1;
-                                saveClient(clients, i);
-
-                                /* Rezise stock after order */
-
-                                modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
-                            }
-
-                            saveProduct(products, nb_products, "src/products.txt");
-
-                            // Empty the cart
-                            memset(panier, 0, SIZE_CARD);
-                            nbItem = 0;
-                            in_Cart = 0;
-                        }
-                        else
-                        {
-                            printf("Insufficient sold!");
-                            printf("\nSold: %.2f$", clients[i].sold);
+                            modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
                         }
 
-                        break;
+                        saveProduct(products, nb_products, "src/products.txt");
 
-                    case 2: // Exit option
-                        printf("Return\n");
-                        clearConsole();
-                        break;
-
-                    default:
-                        printf("Invalid choice.\n");
-                        break;
+                        // Empty the cart
+                        memset(panier, 0, SIZE_CARD);
+                        nbItem = 0;
+                        in_Cart = 0;
                     }
+                    else
+                    {
+                        printf("Insufficient sold!");
+                        printf("\nSold: %.2f$", clients[i].sold);
+                    }
+
+                    break;
+
+                case 2: // Exit option
+                    printf("Return\n");
+                    in_Cart = 0;
+                    clearConsole();
+                    break;
+
+                default:
+                    printf("Invalid choice.\n");
+                    break;
                 }
             };
             break;

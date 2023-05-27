@@ -68,6 +68,7 @@ int main()
                 switch (choiceOne)
                 {
                 case 1: // Gestion mode
+                    clearConsole();
                     choiceOne = 0;
                     in_Gestion = 1;
                     while (in_Gestion)
@@ -141,11 +142,13 @@ int main()
                     break;
 
                 case 2: // Purchase mode
+                    clearConsole();
                     printf("\n");
                     purchase(clients, nbClients, i);
                     break;
 
                 case 3: // Customer mode
+                    clearConsole();
                     in_Customer = 1;
                     while (in_Customer)
                     {
