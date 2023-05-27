@@ -97,13 +97,8 @@ void purchase(Customer clients[], int nbClients, int i)
 
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
-
-                        for (ihistorique; ihistorique < 3; ihistorique++)
-                        {
-                            clients[i].purchase[ihistorique] = panier[ipanier].reference;
-                            clients[i].nbPurchase += 1;
-                        }
-
+                        clients[i].purchase[ipanier] = panier[ipanier].reference;
+                        clients[i].nbPurchase += 1;    
                         saveClient(clients, i);
 
                         /* Rezise stock after order */
