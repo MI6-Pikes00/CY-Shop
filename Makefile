@@ -8,7 +8,7 @@ SRC_DIR := src
 EXEC_NAME = CY-Shop
 
 # get all c files
-SRC=$((SRC_DIR)/wildcard *.c) # src/main.c
+SRC=$(wildcard $(SRC_DIR)/*.c) # src/main.c
 
 # build the executable
 exec: $(SRC)
