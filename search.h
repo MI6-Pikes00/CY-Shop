@@ -8,36 +8,43 @@
 
 int searchProduct(Product productArray[], int referance)
 {
-    for (int i = 0; i < TAB; i++)
-    {
-        if (productArray[i].reference == referance)
-        {
-            return productArray[i].quantity;
-        }
-        printf("The typed reference is unknown\n");
-    }
-    return 0;
-}
+    int choice;
+    printf("This is for search a product by name or reference\n");
+    printf("1. By name\n");
+    printf("2. By reference\n ");
+    printf("Enter choice : ");
 
-// Function to sort item by name or referance or quantity by selection in the menu
-// 1 : Name
-// 2 : Quantity
+    scanf("%d", &choice);
 
-int sortProduct(int i)
-{
-    switch (i)
+    switch (choice)
     {
-    case 1:
+    case 1: // search product by name
+
+            // saisie de la réference
+            
+            // strcmp <- fonction pour comparer deux chaines de caractères (inclue dans <string.h>)
+
         /* code */
         break;
 
-    case 2:
-        /* code */
+    case 2: // search product by reference
+        
+        // saisie de la réference
+
+
+        for (int i = 0; i < TAB; i++)
+        {
+            if (productArray[i].reference == referance)
+            {
+                return productArray[i].quantity;
+            }
+            printf("The typed reference is unknown\n");
+        }
         break;
 
     default:
-        printf("type of sort unsigned\n");
         break;
     }
+
     return 0;
 }

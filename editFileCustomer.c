@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// // Fonction that allow to load clients from files
+// Fonction that allow to load clients from files
 void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
 {
     DIR *dossier;
@@ -44,7 +44,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
             continue;
         }
 
-        // ? 
+        // Fonction that allow to read every data of all customers file
         fread(&clients[*nbClients], sizeof(Customer), 1, file);
         fclose(file);
         free(filePath);

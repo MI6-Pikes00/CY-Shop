@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 
+void clearCart(){
+
+}
+
 // Stock management menu
 void purchase(Customer clients[], int nbClients, int i)
 {
@@ -93,7 +97,7 @@ void purchase(Customer clients[], int nbClients, int i)
                                 clients[i].purchase[ihistorique] = panier[ipanier].reference;
                                 clients[i].nbPurchase += 1;
                         }
-                        modifiesQuantity(products, nb_products, panier[ipanier].reference, panier[ipanier].quantity);
+                        modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
                     }
                     /* Rezise stock about order */
 
@@ -131,7 +135,8 @@ void purchase(Customer clients[], int nbClients, int i)
                 // Add to card 
                 printf("\n");
                 printf("1. Add to card\n");
-                printf("2. Exit\n");
+                printf("2. Search\n"); //have to have case search
+                printf("3. Exit\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choix);
                 printf("\n");
