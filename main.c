@@ -17,6 +17,8 @@ int main()
 
     int i = 0;
     int choice = 0;
+    int choiceUn = 0;
+    int choiceDeux = 0;
 
     loadProduct(products, &nb_products, "products.txt");
 
@@ -32,24 +34,22 @@ int main()
         switch (choice)
         {
         case 1: // Gestion mode
-            int choice1 = 0;
             while (1)
             {
                 quickSort(products, 0, nb_products - 1);
 
-                saveProduct(products, nb_products, "products.txt");
-
                 printf("\n");
                 stockVerification(products, nb_products);
                 printf("\n");
+
                 printf("1. Display products list\n");
                 printf("2. Add new product\n");
                 printf("3. Modifies product quantity\n");
                 printf("4. Quit\n");
+                printf("Enter your choice: ");
+                scanf("%d", &choiceUn);
 
-                scanf("Enter your choice: %d", &choice1);
-
-                switch (choice1)
+                switch (choiceUn)
                 {
                 case 1:
                     printf("Products list:\n");
@@ -66,17 +66,18 @@ int main()
                     break;
 
                 case 4:
+                    saveProduct(products, nb_products, "products.txt");
                     return 0;
                     break;
 
                 default:
                     printf("Invalid choice.\n");
+                    printf("\n");
                     break;
                 }
             };
 
         case 2: // Purchase mode
-            int choice2 = 0;
             while (1)
             {
                 loadCustomer(clients, &nbClients);
@@ -86,9 +87,9 @@ int main()
                 printf("3. Delete account\n");
                 printf("4. Exit\n");
                 printf("Enter your choice: ");
-                scanf("%d", &choice2);
+                scanf("%d", &choiceDeux);
                 printf("\n");
-                switch (choice2)
+                switch (choiceDeux)
                 {
                 case 1: // Login
                     // clearConsole();

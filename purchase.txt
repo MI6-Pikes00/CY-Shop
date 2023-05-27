@@ -10,3 +10,26 @@
 
 
 
+
+  for (ipanier; ipanier < nbItem; ipanier++)
+                    {
+                        printf("boucle 1"); // Just to test
+                        if (clients[i].nbPurchase == -1)
+                        {
+
+                            for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
+                            {
+                                clients[i].purchase[ihistorique] = panier[ipanier].reference;
+                                clients[i].nbPurchase += 1;
+                            }
+                        }
+                        for (ihistorique; ihistorique <= clients[i].nbPurchase; ihistorique++)
+                            if (panier[ipanier].reference != clients[i].purchase[ihistorique])
+                            {
+                                clients[i].purchase[ihistorique] = panier[ipanier].reference;
+                                clients[i].nbPurchase += 1;
+                            }
+                    }
+
+
+

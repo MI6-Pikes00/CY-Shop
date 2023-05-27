@@ -88,8 +88,9 @@ void accountRegister(Customer clients[], int *nbClients)
     {
         accountNumber = genereraccountNumber();
     } while (accountNumberAttributed(accountNumber, clients, *nbClients));
-    newCustomer.reference = accountNumber;
-    newCustomer.nbPurchase = -1;
+    newCustomer.reference = accountNumber;;
+    memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
+    newCustomer.nbPurchase = SIZE;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients += 1;
 

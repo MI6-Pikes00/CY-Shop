@@ -14,6 +14,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
     printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
     Panier panier[SIZE_CARD];
+
     int nbItem = 0;
     int choix;
     int ipanier = 0;
