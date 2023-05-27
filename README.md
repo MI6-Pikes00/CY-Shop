@@ -1,7 +1,13 @@
 # CY-Shop 
-## Projet-preing1
+
 
 Ceci est notre projet d'informatique de fin de semestre dans le cadre de notre cursus de préIng1 à CY Tech.
+
+## Context
+
+Le but est de créé un programme en C permettant de gérer des stocks et des fichiers clients pour un magasin. En l'occurence notre magasin est une entreprise de vente de voitures et de pièces détachés. 
+
+Le programme permet de choisir entre deux modes. Le mode d'achat ou le mode de gestion
 
 ## Preview
 
@@ -17,7 +23,7 @@ Ceci est notre projet d'informatique de fin de semestre dans le cadre de notre c
    git clone https://github.com/MI6-Pikes00/Projet-preing1
    ```
 
-### Compiler avec Make
+### Compile and Run
 3. Enter the new folder
    ```sh
    cd Projet-preing1
