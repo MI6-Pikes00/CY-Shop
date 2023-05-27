@@ -1,7 +1,10 @@
-wv 2188 1 LARGE 4
-citroen 4976 1 SMALL 1
-alfa 3936 1 MEDIUM 2
-bmw 2108 1 LARGE 4
-volvo 632 1 LARGE 4
-Nissan 4970 0 LARGE 4
-mercedes 7724 0 LARGE 4
+pneu_michelin 1801 0 19.70 LARGE 4
+moteur 5533 5 200.00 LARGE 4
+transmission 3873 6 100.00 MEDIUM 2
+jante 7383 8 19.70 LARGE 4
+huile 5819 10 9.99 LARGE 4
+liquide_de_refroidissement 2883 15 19.99 SMALL 1
+essence 3013 20 1.70 MEDIUM 2
+courroie_de_distribution 3882 25 35.99 SMALL 1
+ammortisseur 8283 25 49.99 MEDIUM 2
+ampoule 9973 50 1.99 SMALL 1

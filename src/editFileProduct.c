@@ -33,17 +33,17 @@ void stockVerification(Product products[], int nb_products)
     {
         if (products[i].quantity == 0)
         {
-            printf("\tName : %s, ", products[i].name);
+            printf("\tName : %-30s, ", products[i].name);
             printf("\tReference : %d\n", products[i].reference);
             c++;
         }
     }
 
     // Loop to display 5 first product with the lowest stock after out of stock products.
-    printf("Product with low stock :\n");
+    printf("\nProduct with low stock :\n");
     for (int j = c; j < c + 5; j++)
     {
-        printf("\tName : %s, ", products[j].name);
+        printf("\tName : %-30s, ", products[j].name);
         printf("\tReference : %d\n", products[j].reference);
     }
 }
@@ -80,21 +80,37 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
     {
         int b = 1;
 
-        printf("Put the name : ");
+        printf("\nPut the name : ");
         scanf("%s", products[*nb_products].name);
 
-        printf("Put the quantity : ");
-        scanf("%d", &products[*nb_products].quantity);
+        printf("\nPut the quantity : ");
 
-        printf("Put the price : ");
+        int validAddProduct = scanf("%d", &products[*nb_products].quantity);
+        if (validAddProduct != 1)
+        {
+            while (getchar() != '\n')
+            {
+                // clean the entrances
+            }
+        }
+
+        printf("\nPut the price : ");
         scanf("%f", &products[*nb_products].price);
 
         // Loop to check if the recovery of input is correct
         do
         {
             int p = 0;
-            printf("Put the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
-            scanf("%d", &p);
+            printf("\nPut the size (1 = SMALL, 2 = MEDIUM, 3 = LARGE): ");
+            int validAddProduct1 = scanf("%d", &p);
+            if (validAddProduct1 != 1)
+            {
+                while (getchar() != '\n')
+                {
+                    // clean the entrances
+                }
+            }
+
             if (SIZE_SHOP - (placeAvailabe(products, *nb_products) + (products[*nb_products].quantity * p)) > 0)
             {
                 // Case who attribute good variable to input
@@ -116,19 +132,19 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
                     b = 0;
                     break;
                 default:
-                    printf("Error value is not correct ! \n");
+                    printf("\nError value is not correct ! \n");
                     break;
                 }
             }
             // Basic case, return an error if there is no place
             else
             {
-                printf("There is no more space, the object %s is to big", products[*nb_products].name);
+                printf("\nThere is no more space, the object %s is to big", products[*nb_products].name);
                 return;
             }
         } while (b);
 
-        printf("Size is defined ! \n");
+        printf("\nSize is defined ! \n");
 
         b = 1;
 
@@ -140,7 +156,7 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
             if (checkReference(products, *nb_products, ref))
             {
                 products[*nb_products].reference = ref;
-                printf("The reference assigned is %d \n", ref);
+                printf("\nThe reference assigned is %d \n", ref);
                 b = 0;
             }
         } while (b);
@@ -150,7 +166,7 @@ void addProduct(Product products[], int *nb_products) // We put *nb_products, be
 
     else
     {
-        printf("No more space\n");
+        printf("\nNo more space\n");
     }
 }
 
@@ -165,6 +181,7 @@ void displayProduct(Product products[], int nb_products)
         printf("\tName : %s\n", products[i].name);
         printf("\tReference : %d\n", products[i].reference);
         printf("\tQuantity : %d\n", products[i].quantity);
+        printf("\tPrice : %.2f\n", products[i].price);
         printf("\tSize : %s\n", products[i].size);
         printf("\tPlace: %d\n", products[i].place);
     }
@@ -185,7 +202,7 @@ void saveProduct(Product products[], int nb_products, const char *fileName)
     // Loop who print all information in the file. (Rewrite all)
     for (int i = 0; i < nb_products; i++)
     {
-        fprintf(file, "%s %d %d %s %d\n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
+        fprintf(file, "%s %d %d %.2f %s %d\n", products[i].name, products[i].reference, products[i].quantity, products[i].price, products[i].size, products[i].place);
     }
 
     // Close the file after the ending
@@ -206,7 +223,7 @@ void loadProduct(Product products[], int *nb_products, const char *fileName)
     // Loop who scan the file data.
     while (!feof(file))
     {
-        fscanf(file, "%s %d %d %s %d\n", products[*nb_products].name, &products[*nb_products].reference, &products[*nb_products].quantity, products[*nb_products].size, &products[*nb_products].place);
+        fscanf(file, "%s %d %d %f %s %d\n", products[*nb_products].name, &products[*nb_products].reference, &products[*nb_products].quantity, &products[*nb_products].price, products[*nb_products].size, &products[*nb_products].place);
         (*nb_products)++;
     }
 

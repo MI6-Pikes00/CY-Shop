@@ -1,7 +1,7 @@
 #include "clientPurchase.h"
 #include "editFileCustomer.h"
 #include "editFileProduct.h"
-// #include "search.h"
+#include "search.h"
 #include "structFile.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,16 +25,21 @@ int main()
     int ref = 0;
     int q = 0;
 
-    loadProduct(products, &nb_products, "products.txt");
-    
+    int in_main = 1;
+    int in_Log = 0;
+    int in_Gestion = 0;
+    int in_Customer = 0;
 
-    while (1)
+    loadProduct(products, &nb_products, "src/products.txt");
+
+    while (in_main)
     {
         printf("1. Log In\n");
         printf("2. Register\n");
         printf("3. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+
         printf("\n");
 
         switch (choice)
@@ -43,6 +48,10 @@ int main()
             loadCustomer(clients, &nbClients);
             i = accountAcces(clients, nbClients);
             if ((i != -1))
+            {
+                in_Log = 1;
+            }
+            while (in_Log)
             {
                 clearConsole();
                 printf("\nHello %s %s.\n", clients[i].name, clients[i].firstName);
@@ -53,11 +62,15 @@ int main()
                 printf("4. Exit\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choiceOne);
+
                 printf("\n");
+
                 switch (choiceOne)
                 {
                 case 1: // Gestion mode
-                    while (1)
+                    choiceOne = 0;
+                    in_Gestion = 1;
+                    while (in_Gestion)
                     {
                         quickSort(products, 0, nb_products - 1);
 
@@ -70,7 +83,14 @@ int main()
                         printf("3. Modifies product quantity\n");
                         printf("4. Quit\n");
                         printf("Enter your choice: ");
-                        scanf("%d", &choiceTwo);
+                        int valid = scanf("%d", &choiceTwo);
+                        if (valid != 1)
+                        {
+                            while (getchar() != '\n')
+                            {
+                                // clean the entrances
+                            }
+                        }
 
                         switch (choiceTwo)
                         {
@@ -81,21 +101,35 @@ int main()
                         case 2:
                             addProduct(products, &nb_products);
                             quickSort(products, 0, nb_products - 1);
-                            saveProduct(products, nb_products, "products.txt");
+                            saveProduct(products, nb_products, "src/products.txt");
                             break;
                         case 3:
-                            
-                            printf("Enter the reference of the product whose quantity you want to change: ");
-                            scanf("%d", &ref);
-                            printf("Put new quantity to add : ");
-                            scanf("%d", &q);
+
+                            printf("\nEnter the reference of the product whose quantity you want to change: ");
+                            int validGestion = scanf("%d", &ref);
+                            if (validGestion != 1)
+                            {
+                                while (getchar() != '\n')
+                                {
+                                    // clean the entrances
+                                }
+                            }
+                            printf("\nPut new quantity to add: ");
+                            int validGestion1 = scanf("%d", &q);
+                            if (validGestion1 != 1)
+                            {
+                                while (getchar() != '\n')
+                                {
+                                    // clean the entrances
+                                }
+                            }
                             modifiesQuantity(products, nb_products, ref, q);
-                            saveProduct(products, nb_products, "products.txt");
+                            saveProduct(products, nb_products, "src/products.txt");
                             break;
 
                         case 4:
-                            saveProduct(products, nb_products, "products.txt");
-                            return 0;
+                            saveProduct(products, nb_products, "src/products.txt");
+                            in_Gestion = 0;
                             break;
 
                         default:
@@ -104,30 +138,38 @@ int main()
                             break;
                         }
                     };
+                    break;
 
                 case 2: // Purchase mode
+                    printf("\n");
                     purchase(clients, nbClients, i);
                     break;
 
                 case 3: // Customer mode
-                    while (1)
+                    in_Customer = 1;
+                    while (in_Customer)
                     {
-                        printf("MAIN MENU\n");
                         printf("1. Delete account\n");
                         printf("2. Exit\n");
                         printf("Enter your choice: ");
-                        scanf("%d", &choiceThree);
+                        int validCustomer = scanf("%d", &choiceThree);
+                        if (validCustomer != 1)
+                        {
+                            while (getchar() != '\n')
+                            {
+                                // clean the entrances
+                            }
+                        }
                         printf("\n");
                         switch (choiceThree)
                         {
                         case 1: // Delete account
                             clearConsole();
                             deleteAccount(clients, nbClients, i);
-                            return 0;
                             break;
 
                         case 2: // Exit
-                            return 0;
+                            in_Customer = 0;
                             break;
 
                         default:
@@ -141,34 +183,32 @@ int main()
                 case 4: // Exit
                     printf("Goodbye!\n");
                     clearConsole();
-                    return 0;
+                    in_Log = 0;
                     break;
 
                 default:
                     printf("Invalid choice.\n");
                     printf("\n");
-                    return 0;
                     break;
                 };
             }
+
             break;
 
         case 2: // Register
             clearConsole();
             accountRegister(clients, &nbClients);
-            return 0;
             break;
 
         case 3: // Exit
             printf("Goodbye!\n");
             clearConsole();
-            return 0;
+            in_main = 0;
             break;
 
         default:
             printf("Invalid choice.\n");
             printf("\n");
-            return 0;
             break;
         };
 

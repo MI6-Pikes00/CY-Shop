@@ -9,7 +9,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
 {
     DIR *dossier;
     struct dirent *entree;
-    dossier = opendir("clientFolder");
+    dossier = opendir("src/clientFolder");
 
     // Verification of good working
     if (dossier == NULL)
@@ -26,8 +26,8 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
         }
 
         // Setup variables
-        char fileName[20];
-        char *folderPath = "clientFolder/";
+        char fileName[30];
+        char *folderPath = "src/clientFolder/";
         char *filePath = (char *)malloc(strlen(folderPath) + strlen(fileName) + 1);
 
         // Builds the complete path of the file
@@ -107,7 +107,7 @@ void accountRegister(Customer clients[], int *nbClients)
 
     // Save the new client in a file
     char fileName[25];
-    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
+    sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
 
     FILE *file = fopen(fileName, "wb");
     if (file == NULL)
@@ -127,7 +127,7 @@ void accountRegister(Customer clients[], int *nbClients)
 void deleteFile(int accountNumber)
 {
     char fileName[25];
-    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
+    sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
 
     if (remove(fileName) == 0)
     {
@@ -140,15 +140,16 @@ void deleteFile(int accountNumber)
 }
 
 // Fonction that allow to delete account completly
-int deleteAccount(Customer clients[], int nbClients, int i)
+void deleteAccount(Customer clients[], int nbClients, int i)
 {
     int accountNumber = clients[i].reference;
+    int in_delete = 1;
 
     if (accountNumberAttributed(accountNumber, clients, nbClients))
     {
         int choix = 0;
         int valid = 0;
-        while (1)
+        while (in_delete)
         {
             printf("Do you want to delete your account\n");
             printf("1. Validate\n");
@@ -169,12 +170,13 @@ int deleteAccount(Customer clients[], int nbClients, int i)
             case 1: // Deleting file
                 deleteFile(accountNumber);
                 printf("DONE !\n");
-                return 0;
+                in_delete = 0;
                 break;
             case 2: // Cancel
                 printf("Cancelation...\n");
-                return 0;
+                in_delete = 0;
                 break;
+
             default:
                 printf("Invalid entry, please try again.\n");
                 break;
@@ -183,7 +185,6 @@ int deleteAccount(Customer clients[], int nbClients, int i)
 
         printf("Your account number does not exist.\n"); // Not used
     }
-    return 0;
 }
 
 // Fonction that allow to access at your customer account
@@ -192,7 +193,14 @@ int accountAcces(Customer clients[], int nbClients)
     int accountNumber = 0;
 
     printf("Enter your account number: ");
-    scanf("%d", &accountNumber);
+    int validAccountNb = scanf("%d", &accountNumber);
+    if (validAccountNb != 1)
+    {
+        while (getchar() != '\n')
+        {
+            // clean the entrances
+        }
+    }
     printf("\n");
 
     char pswd[SIZE];
@@ -222,6 +230,7 @@ void copyIntArray(const char source[], char destination[], int length)
     for (int i = 0; i < length; i++)
     {
         strcpy(&destination[i], &source[i]);
+
     }
 }
 
@@ -238,7 +247,7 @@ void saveClient(Customer client[], int i)
 
     int accountNumber = client[i].reference;
     char fileName[25];
-    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
+    sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
     // Open the file in writing mode.
     FILE *file = fopen(fileName, "wb");
     // Condition so the function printf error if the file is not found.
