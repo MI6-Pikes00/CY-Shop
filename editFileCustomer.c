@@ -138,14 +138,14 @@ void deleteFile(int accountNumber)
 }
 
 // Fonction that allow to delete account completly
-void deleteAccount(Customer clients[], int nbClients, int i)
+int deleteAccount(Customer clients[], int nbClients, int i)
 {
     int accountNumber = clients[i].reference;
 
     if (accountNumberAttributed(accountNumber, clients, nbClients))
     {
         int choix = 0;
-        do
+        while(1)
         {
             printf("Do you want to delete your account\n");
             printf("1. Validate\n");
@@ -159,16 +159,19 @@ void deleteAccount(Customer clients[], int nbClients, int i)
             case 1: // Deleting file
                 deleteFile(accountNumber);
                 printf("DONE !\n");
+                return 0;
                 break;
 
             case 2: // Cancel
                 printf("Annulation ...\n");
+                return 0;
                 break;
             }
-        } while (choix != 2);
+        };
 
         printf("Your account number does not exist.\n");
     }
+    return 0;
 }
 
 // Fonction that allow to access at your customer account

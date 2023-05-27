@@ -41,7 +41,6 @@ int main()
         switch (choice)
         {
         case 1: // Log In
-            clearConsole();
             loadCustomer(clients, &nbClients);
             i = accountAcces(clients, nbClients);
             if ((i != -1))
@@ -125,6 +124,7 @@ int main()
                         case 1: // Delete account
                             clearConsole();
                             deleteAccount(clients, nbClients, i);
+                            return 0;
                             break;
 
                         case 2: // Exit
@@ -134,6 +134,7 @@ int main()
                         default:
                             printf("Invalid choice.\n");
                             printf("\n");
+                            return 0;
                             break;
                         }
                     };
@@ -141,11 +142,13 @@ int main()
                 case 4: // Exit
                     printf("Goodbye!\n");
                     clearConsole();
+                    return 0;
                     break;
 
                 default:
                     printf("Invalid choice.\n");
                     printf("\n");
+                    return 0;
                     break;
                 };
             }
@@ -154,16 +157,19 @@ int main()
         case 2: // Register
             clearConsole();
             accountRegister(clients, &nbClients);
+            return 0;
             break;
 
         case 3: // Exit
             printf("Goodbye!\n");
             clearConsole();
+            return 0;
             break;
 
         default:
             printf("Invalid choice.\n");
             printf("\n");
+            return 0;
             break;
         };
 

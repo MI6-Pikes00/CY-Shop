@@ -61,7 +61,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
         case 2: // Access to the cart
             clearConsole();
-            do
+            while (1)
             {
                 if (nbItem == 0)
                 {
@@ -110,7 +110,6 @@ void purchase(Customer clients[], int nbClients, int i)
                         // Empty the cart
                         memset(panier, 0, SIZE_CARD);
                         nbItem = 0;
-
                         break;
 
                     case 2: // Exit option
@@ -124,7 +123,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     }
                 }
 
-            } while (choix != 2);
+            };
             break;
 
         case 3: // Menu to search object to buy
