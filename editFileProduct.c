@@ -185,7 +185,7 @@ void saveProduct(Product products[], int nb_products, const char *fileName)
     // Loop who print all information in the file. (Rewrite all)
     for (int i = 0; i < nb_products; i++)
     {
-        fprintf(file, "%s %d %d %s %d \n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
+        fprintf(file, "%s %d %d %s %d\n", products[i].name, products[i].reference, products[i].quantity, products[i].size, products[i].place);
     }
 
     // Close the file after the ending

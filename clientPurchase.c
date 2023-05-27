@@ -1,10 +1,11 @@
 #include "clientPurchase.h"
+#include "editFileCustomer.h"
 #include "editFileProduct.h"
 #include <stdio.h>
 #include <string.h>
 
-void clearCart(){
-
+void clearCart()
+{
 }
 
 // Stock management menu
@@ -12,7 +13,7 @@ void purchase(Customer clients[], int nbClients, int i)
 {
     Product products[SIZE_SHOP];
     int nb_products = 0;
-    
+
     // Loading of products in stock
     loadProduct(products, &nb_products, "products.txt");
 
@@ -45,14 +46,18 @@ void purchase(Customer clients[], int nbClients, int i)
         case 1: // Print purchase history
             clearConsole();
             printf("Purchase history:\n");
-            if (clients[i].nbPurchase != -1)
+            if (clients[i].nbPurchase != 0)
             {
                 for (int j = 0; j < clients[i].nbPurchase; j++)
                 {
-                    printf("%d", clients[i].purchase[j]);
+                    printf("%d ", clients[i].purchase[j]);
                 }
             }
-            printf("Vous n'avez pas encore fait d'achat sur notre site web.\n");
+            else
+            {
+                printf("Vous n'avez pas encore fait d'achat sur notre site web.\n");
+            }
+
             break;
 
         case 2: // Access to the cart
@@ -92,14 +97,19 @@ void purchase(Customer clients[], int nbClients, int i)
 
                     for (ipanier; ipanier < nbItem; ipanier++)
                     {
+
                         for (ihistorique; ihistorique < 3; ihistorique++)
                         {
-                                clients[i].purchase[ihistorique] = panier[ipanier].reference;
-                                clients[i].nbPurchase += 1;
+                            clients[i].purchase[ihistorique] = panier[ipanier].reference;
+                            clients[i].nbPurchase += 1;
                         }
+
+                        saveClient(clients, i);
+
+                        /* Rezise stock after order */
+
                         modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
                     }
-                    /* Rezise stock about order */
 
                     saveProduct(products, nb_products, "products.txt");
 
@@ -132,10 +142,10 @@ void purchase(Customer clients[], int nbClients, int i)
 
             do
             {
-                // Add to card 
+                // Add to card
                 printf("\n");
                 printf("1. Add to card\n");
-                printf("2. Search\n"); //have to have case search
+                printf("2. Search\n"); // have to have case search
                 printf("3. Exit\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choix);
@@ -143,7 +153,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
                 switch (choix)
                 {
-                case 1: // Add to cart 
+                case 1: // Add to cart
                     printf("Enter the reference: ");
                     scanf("%d", &choixpouraddaupanier);
 
@@ -177,7 +187,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     clearConsole();
                     break;
 
-                default: 
+                default:
                     printf("Invalid choice.\n");
                     printf("\n");
                     break;

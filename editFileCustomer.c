@@ -97,7 +97,7 @@ void accountRegister(Customer clients[], int *nbClients)
     // Consideration of new information 
     newCustomer.reference = accountNumber;;
     // memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
-    newCustomer.nbPurchase = -1;
+    newCustomer.nbPurchase = 0;
     // Add the new client to the list of clients    clients[*nbClients] = newCustomer;
     *nbClients += 1;
 
@@ -200,4 +200,26 @@ int accountAcces(Customer clients[], int nbClients)
     printf("Invalid account number.\n");
     return -1;
     printf("\n");
+}
+
+// Function that allows to write to the text file where the data are stored.
+
+void saveClient(Customer client[], int i)
+{
+    int accountNumber = client[i].reference;
+    char fileName[25];
+    sprintf(fileName, "clientFolder/%d.dat", accountNumber);
+    // Open the file in writing mode.
+    FILE *file = fopen(fileName, "wb+");
+    // Condition so the function printf error if the file is not found.
+    if (file == NULL)
+    {
+        printf("Error : unable to open the file %s\n", fileName);
+        return;
+    }
+    // Loop who print all information in the file. (Rewrite all)
+    fwrite(&client, sizeof(Customer), 1, file);
+
+    // Close the file after the ending
+    fclose(file);
 }

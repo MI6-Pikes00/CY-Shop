@@ -9,4 +9,5 @@ void accountRegister(Customer clients[], int *nbClients);
 void deleteFile(int accountNumber);
 void deleteAccount(Customer clients[], int nbClients);
 int accountAcces(Customer clients[], int nbClients);
+void saveClient(Customer client[], int i);
 #endif

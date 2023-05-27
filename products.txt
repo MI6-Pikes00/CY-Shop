@@ -1,7 +1,7 @@
-wv 2188 1 LARGE 4 
-mercedes 7724 5 LARGE 4 
-citroen 4976 3 SMALL 1 
-alfa 3936 4 MEDIUM 2 
-bmw 2108 10 LARGE 4 
-volvo 632 10 LARGE 4 
-Nissan 4970 10 LARGE 4 
+wv 2188 1 LARGE 4
+mercedes 7724 2 LARGE 4
+citroen 4976 2 SMALL 1
+alfa 3936 4 MEDIUM 2
+bmw 2108 5 LARGE 4
+volvo 632 4 LARGE 4
+Nissan 4970 4 LARGE 4
