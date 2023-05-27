@@ -79,7 +79,6 @@ void purchase(Customer clients[], int nbClients, int i)
                         ptotal += panier[i].price;
                     }
                     printf("\nTotal: %.2f$\n", ptotal);
-                    clients[i].sold -= ptotal;
                 
                     printf("\n");
                     printf("1. Buy\n");
@@ -91,27 +90,38 @@ void purchase(Customer clients[], int nbClients, int i)
                     switch (choix)
                     {
                     case 1: // Valid option
-                        printf("Validate process ...\n");
-                        printf("THANKS FOR YOUR ORDER\n");
-                        // Adding product to the order history of an account
-
-                        for (ipanier; ipanier < nbItem; ipanier++)
+                        clients[i].sold -= ptotal;
+                        if (clients[i].sold >= ptotal)
                         {
-                            strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
-                            clients[i].nbPurchase += 1;
-                            saveClient(clients, i);
+                            printf("Validate process ...\n");
+                            printf("THANKS FOR YOUR ORDER\n");
+                            // Adding product to the order history of an account
 
-                            /* Rezise stock after order */
+                            for (ipanier; ipanier < nbItem; ipanier++)
+                            {
+                                strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
+                                clients[i].nbPurchase += 1;
+                                saveClient(clients, i);
 
-                            modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
+                                /* Rezise stock after order */
+
+                                modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
+                            }
+
+                            saveProduct(products, nb_products, "products.txt");
+
+                            // Empty the cart
+                            memset(panier, 0, SIZE_CARD);
+                            nbItem = 0;
                         }
-
-                        saveProduct(products, nb_products, "products.txt");
-
-                        // Empty the cart
-                        memset(panier, 0, SIZE_CARD);
-                        nbItem = 0;
+                        else
+                        {
+                            printf("Insufficient sold!");
+                            printf("\nSold: %.2f", clients[i].sold);
+                        }
+                        
                         break;
+
 
                     case 2: // Exit option
                         printf("Return\n");
@@ -171,7 +181,7 @@ void purchase(Customer clients[], int nbClients, int i)
                                 panier[nbItem].price = products[i].price;
                                 panier[nbItem].quantity = q;
                                 nbItem++;
-                                printf("Added succesfully to panier\n");
+                                printf("\nAdded succesfully to cart\n");
                             }
                             else
                             {
