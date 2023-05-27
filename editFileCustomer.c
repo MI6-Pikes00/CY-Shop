@@ -4,13 +4,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// // Fonction that allow to load clients from files
 void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
 {
-    // Loading clients from files
-
     DIR *dossier;
     struct dirent *entree;
     dossier = opendir("clientFolder");
+    
+    // Verification of good working
     if (dossier == NULL)
     {
         printf("Error when opening the client file.\n");
@@ -24,6 +25,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
             continue;
         }
 
+        // Setup variables
         char fileName[20];
         char *folderPath = "clientFolder/";
         char *filePath = (char *)malloc(strlen(folderPath) + strlen(fileName) + 1);
@@ -33,6 +35,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
         strcpy(filePath, folderPath);
         strcat(filePath, fileName);
 
+        // Opening file
         FILE *file = fopen(filePath, "rb");
         if (file == NULL)
         {
@@ -40,6 +43,8 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
             printf("Error when opening the file %s.\n", fileName);
             continue;
         }
+
+        // ? 
         fread(&clients[*nbClients], sizeof(Customer), 1, file);
         fclose(file);
         free(filePath);
@@ -48,15 +53,15 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
     closedir(dossier);
 }
 
+// Generation of a random number account between 1000 and 9999
 int genereraccountNumber()
 {
-    // Generation of a random number between 1000 and 9999
     return rand() % (9000) + 1000;
 }
 
+// Verification of the existence of the account number in customer files
 int accountNumberAttributed(int accountNumber, Customer clients[], int nbClients)
 {
-    // Verification of the existence of the account number in the customer files
     for (int i = 0; i < nbClients; i++)
         if (clients[i].reference == accountNumber)
         {
@@ -65,10 +70,11 @@ int accountNumberAttributed(int accountNumber, Customer clients[], int nbClients
     return 0;
 }
 
+// Fonction that allow to create an account
 void accountRegister(Customer clients[], int *nbClients)
 {
     int accountNumber = 0;
-    if (*nbClients == MAX_CLIENTS)
+    if (*nbClients == MAX_CLIENTS) // Verification of number of client accounts
     {
         printf("The maximum number of customers is reached.\n");
         return;
@@ -84,10 +90,11 @@ void accountRegister(Customer clients[], int *nbClients)
     scanf("%s", newCustomer.password);
 
     // Random generation of the account number
-    do
-    {
+    do{
         accountNumber = genereraccountNumber();
     } while (accountNumberAttributed(accountNumber, clients, *nbClients));
+    
+    // Consideration of new information 
     newCustomer.reference = accountNumber;;
     memset(newCustomer.purchase, 0, sizeof(newCustomer.purchase)); // NEW FUNCTION
     newCustomer.nbPurchase = SIZE;
@@ -112,6 +119,7 @@ void accountRegister(Customer clients[], int *nbClients)
     printf("\n");
 }
 
+// Fonction that allow to delete the file account
 void deleteFile(int accountNumber)
 {
     char fileName[25];
@@ -127,6 +135,7 @@ void deleteFile(int accountNumber)
     }
 }
 
+// Fonction that allow to delete account completly
 void deleteAccount(Customer clients[], int nbClients)
 {
     int accountNumber = 0;
@@ -145,8 +154,8 @@ void deleteAccount(Customer clients[], int nbClients)
             printf("2. Cancel\n");
 
             printf("Enter your choice: ");
-            scanf("%d", &choix);
-            printf("\n");
+            scanf("%d \n", &choix);
+
             switch (choix)
             {
             case 1: // Deleting file
@@ -164,6 +173,7 @@ void deleteAccount(Customer clients[], int nbClients)
     }
 }
 
+// Fonction that allow to access at your customer account
 int accountAcces(Customer clients[], int nbClients)
 {
     int accountNumber = 0;

@@ -3,18 +3,19 @@
 #include <stdio.h>
 #include <string.h>
 
+// Stock management menu
 void purchase(Customer clients[], int nbClients, int i)
 {
-    // 
-
     Product products[SIZE_SHOP];
     int nb_products = 0;
     
+    // Loading of products in stock
     loadProduct(products, &nb_products, "products.txt");
 
     printf("Hello %s %s.\n", clients[i].name, clients[i].firstName);
     Panier panier[SIZE_CARD];
 
+    // Setup variables
     int nbItem = 0;
     int choix;
     int ipanier = 0;
@@ -50,7 +51,7 @@ void purchase(Customer clients[], int nbClients, int i)
             printf("Vous n'avez pas encore fait d'achat sur notre site web.\n");
             break;
 
-        case 2: // Access to the card
+        case 2: // Access to the cart
             clearConsole();
             do
             {
@@ -60,6 +61,7 @@ void purchase(Customer clients[], int nbClients, int i)
                 }
                 else
                 {
+                    // Print the cart
                     float ptotal = 0;
                     for (int i = 0; i < nbItem; i++)
                     {
@@ -79,7 +81,7 @@ void purchase(Customer clients[], int nbClients, int i)
 
                 switch (choix)
                 {
-                case 1:
+                case 1: // Valid option
                     printf("Validate process ...\n");
                     printf("THANKS FOR YOUR ORDER\n");
 
@@ -110,12 +112,13 @@ void purchase(Customer clients[], int nbClients, int i)
 
                     break;
 
-                case 2:
+                case 2: // Exit option
                     printf("Return\n");
                     clearConsole();
                     break;
 
                 default:
+                    printf("Invalid choice.\n");
                     break;
                 }
 
@@ -136,7 +139,6 @@ void purchase(Customer clients[], int nbClients, int i)
 
             do
             {
-                // Add to card 
                 printf("\n");
                 printf("1. Add to card\n");
                 printf("2. Exit\n");
@@ -146,13 +148,14 @@ void purchase(Customer clients[], int nbClients, int i)
 
                 switch (choix)
                 {
-                case 1:
+                case 1: // Add to cart 
                     printf("Enter the reference: ");
                     scanf("%d", &choixpouraddaupanier);
 
                     printf("Enter the quantity you wants ");
                     scanf("%d", &q);
 
+                    // Method to add product to cart
                     for (int i = 0; i < nb_products; i++)
                     {
                         if (products[i].reference == choixpouraddaupanier)
@@ -179,13 +182,14 @@ void purchase(Customer clients[], int nbClients, int i)
                     clearConsole();
                     break;
 
-                default:
+                default: 
                     printf("Invalid choice.\n");
                     printf("\n");
                     break;
                 }
             } while (choix != 2);
             break;
+
         case 4: // Exit
             printf("Déconection");
             clearConsole();
