@@ -51,4 +51,3 @@ The customer mode only allows you to delete your customer account from the datab
 ## Known Bugs
 
 - Problem with the *Delete Account*: Requires a second entry after validation in the console for the correct deletion of the account. 
-- Problem with the *indentation* when displaying stocks.

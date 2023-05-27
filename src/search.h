@@ -2,6 +2,6 @@
 #define HEADER_SEARCH 1
 #include "structFile.h"
 
-int searchProduct(Product productArray[], int referance);
+int searchProduct(Product products[], int nb_products);
 
 #endif

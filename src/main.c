@@ -30,7 +30,6 @@ int main()
 
     while (1)
     {
-        printf("MAIN MENU\n");
         printf("1. Log In\n");
         printf("2. Register\n");
         printf("3. Exit\n");

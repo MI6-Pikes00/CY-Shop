@@ -1,11 +1,11 @@
 #include "clientPurchase.h"
 #include "editFileCustomer.h"
 #include "editFileProduct.h"
+#include "search.h"
 #include <stdio.h>
 #include <string.h>
 
-
-// Stock management menu
+// Purchase mode
 void purchase(Customer clients[], int nbClients, int i)
 {
     Product products[SIZE_SHOP];
@@ -24,10 +24,12 @@ void purchase(Customer clients[], int nbClients, int i)
     int c;
     int choixpouraddaupanier;
     int q;
+    int in_buying_mode = 0;
+    float ptotal = 0;
 
     do
     {
-        // Printing Stock Management Menu
+        // Printing Purchase Menu
         printf("\n");
         printf("Purchase Menu\n");
         printf("-------------- \n");
@@ -43,7 +45,7 @@ void purchase(Customer clients[], int nbClients, int i)
         {
         case 1: // Print purchase history
             clearConsole();
-            
+
             if (clients[i].nbPurchase != 0)
             {
                 printf("Purchase history:\n");
@@ -61,7 +63,8 @@ void purchase(Customer clients[], int nbClients, int i)
 
         case 2: // Access to the cart
             clearConsole();
-            while (1)
+            in_buying_mode = 1;
+            while (in_buying_mode)
             {
                 if (nbItem == 0)
                 {
@@ -70,21 +73,28 @@ void purchase(Customer clients[], int nbClients, int i)
                 else
                 {
                     // Print the cart
-                    float ptotal = 0;
                     for (int i = 0; i < nbItem; i++)
-                    {   
+                    {
                         printf("\nProduct Name: %s", panier[i].name);
                         printf("\nQuantity: %d ", panier[i].quantity);
                         printf("\nPrice: %.2f$\n", panier[i].price);
                         ptotal += panier[i].price;
                     }
                     printf("\nTotal: %.2f$\n", ptotal);
-                
+                    clients[i].sold -= ptotal;
+
                     printf("\n");
                     printf("1. Buy\n");
                     printf("2. Exit\n");
                     printf("Enter your choice: ");
-                    scanf("%d", &choix);
+                    int valid = scanf("%d", &choix);
+                    if (valid != 1)
+                    {
+                        while (getchar() != '\n')
+                        {
+                            // clean the entrances
+                        }
+                    }
                     printf("\n");
 
                     switch (choix)
@@ -97,7 +107,7 @@ void purchase(Customer clients[], int nbClients, int i)
                             printf("THANKS FOR YOUR ORDER\n");
                             // Adding product to the order history of an account
 
-                            for (ipanier; ipanier < nbItem; ipanier++)
+                            for (ipanier = 0; ipanier < nbItem; ipanier++)
                             {
                                 strcpy(&clients[i].purchase[ipanier], panier[ipanier].name);
                                 clients[i].nbPurchase += 1;
@@ -113,15 +123,15 @@ void purchase(Customer clients[], int nbClients, int i)
                             // Empty the cart
                             memset(panier, 0, SIZE_CARD);
                             nbItem = 0;
+                            in_buying_mode = 0;
                         }
                         else
                         {
                             printf("Insufficient sold!");
-                            printf("\nSold: %.2f", clients[i].sold);
+                            printf("\nSold: %.2f$", clients[i].sold);
                         }
-                        
-                        break;
 
+                        break;
 
                     case 2: // Exit option
                         printf("Return\n");
@@ -133,7 +143,6 @@ void purchase(Customer clients[], int nbClients, int i)
                         break;
                     }
                 }
-
             };
             break;
 
@@ -143,17 +152,17 @@ void purchase(Customer clients[], int nbClients, int i)
             {
                 if (products[i].quantity > 0)
                 {
-                    printf("\tName : %s", products[i].name);
-                    printf("\tReference : %d", products[i].reference);
-                    printf("\tQuantity : %d\n", products[i].quantity);
+                    printf("Name : %-10s\t", products[i].name);
+                    printf("Reference : %4d\t", products[i].reference);
+                    printf("Quantity : %2d\n", products[i].quantity);
                 }
             }
 
             do
             {
-                // Add to card
+                // Add to cart
                 printf("\n");
-                printf("1. Add to card\n");
+                printf("1. Add to cart\n");
                 printf("2. Search by Name/Ref\n"); // have to have case search
                 printf("3. Exit\n");
                 printf("Enter your choice: ");
@@ -166,7 +175,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     printf("Enter the reference: ");
                     scanf("%d", &choixpouraddaupanier);
 
-                    printf("Enter the quantity you wants: ");
+                    printf("Enter the quantity you want: ");
                     scanf("%d", &q);
 
                     // Method to add product to cart
@@ -192,7 +201,7 @@ void purchase(Customer clients[], int nbClients, int i)
                     break;
 
                 case 2:
-
+                    searchProduct(products, nb_products);
                     break;
 
                 case 3: // Exit

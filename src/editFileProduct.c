@@ -226,7 +226,7 @@ void modifiesQuantity(Product products[], int nb_products, int ref, int q)
             if (SIZE_SHOP - (placeAvailabe(products, nb_products) + (products[i].place * (products[i].quantity + q))) >= 0)
             {
                 products[i].quantity += q;
-                printf("Quantity successfully modified.\n");
+                printf("\nQuantity successfully modified.\n");
             }
             else
             {

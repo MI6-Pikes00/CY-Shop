@@ -147,14 +147,22 @@ int deleteAccount(Customer clients[], int nbClients, int i)
     if (accountNumberAttributed(accountNumber, clients, nbClients))
     {
         int choix = 0;
-        while(1)
+        int valid = 0;
+        while (1)
         {
             printf("Do you want to delete your account\n");
             printf("1. Validate\n");
             printf("2. Cancel\n");
 
             printf("Enter your choice: ");
-            scanf("%d \n", &choix);
+            valid = scanf("%d", &choix);
+            if (valid != 1) {
+                while (getchar()!='\n')
+                {
+                    // clean the entrances
+                }
+                
+            }
 
             switch (choix)
             {
@@ -163,15 +171,17 @@ int deleteAccount(Customer clients[], int nbClients, int i)
                 printf("DONE !\n");
                 return 0;
                 break;
-
             case 2: // Cancel
-                printf("Annulation ...\n");
+                printf("Cancelation...\n");
                 return 0;
+                break;
+            default:
+                printf("Invalid entry, please try again.\n");
                 break;
             }
         };
 
-        printf("Your account number does not exist.\n");
+        printf("Your account number does not exist.\n"); // Not used
     }
     return 0;
 }
