@@ -26,7 +26,7 @@ void loadCustomer(Customer clients[MAX_CLIENTS], int *nbClients)
         }
 
         // Setup variables
-        char fileName[30];
+        char fileName[40];
         char *folderPath = "src/clientFolder/";
         char *filePath = (char *)malloc(strlen(folderPath) + strlen(fileName) + 1);
 
@@ -106,8 +106,10 @@ void accountRegister(Customer clients[], int *nbClients)
     *nbClients += 1;
 
     // Save the new client in a file
-    char fileName[25];
+    char fileName[40];
     sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
+
+    printf("%s\n", fileName);
 
     FILE *file = fopen(fileName, "wb");
     if (file == NULL)
@@ -126,7 +128,7 @@ void accountRegister(Customer clients[], int *nbClients)
 // Fonction that allow to delete the file account
 void deleteFile(int accountNumber)
 {
-    char fileName[25];
+    char fileName[40];
     sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
 
     if (remove(fileName) == 0)
@@ -246,7 +248,7 @@ void saveClient(Customer client[], int i)
     tempCustomer.sold = client[i].sold;
 
     int accountNumber = client[i].reference;
-    char fileName[25];
+    char fileName[40];
     sprintf(fileName, "src/clientFolder/%d.dat", accountNumber);
     // Open the file in writing mode.
     FILE *file = fopen(fileName, "wb");
