@@ -3,10 +3,10 @@ frein 8449 1 10.00 MEDIUM 2
 plaquettes 1020 5 20.00 SMALL 1
 moteur 5533 5 200.00 LARGE 4
 transmission 3873 6 100.00 MEDIUM 2
-jante 7383 8 19.70 LARGE 4
+jante 7383 6 19.70 LARGE 4
 huile 5819 10 9.99 LARGE 4
 liquide_de_refroidissement 2883 15 19.99 SMALL 1
 essence 3013 20 1.70 MEDIUM 2
-ammortisseur 8283 25 49.99 MEDIUM 2
-courroie_de_distribution 3882 25 35.99 SMALL 1
-ampoule 9973 50 1.99 SMALL 1
+ammortisseur 8283 21 49.99 MEDIUM 2
+courroie_de_distribution 3882 24 35.99 SMALL 1
+ampoule 9973 40 1.99 SMALL 1

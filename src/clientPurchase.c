@@ -23,7 +23,6 @@ void purchase(Customer clients[], int nbClients, int i)
     int ihistorique = -1;
     int c;
     int choixpouraddaupanier;
-    int block = 0;
     int q;
     int in_Cart = 0;
     int in_Search_obj = 0;
@@ -79,10 +78,9 @@ void purchase(Customer clients[], int nbClients, int i)
             in_Cart = 1;
             while (in_Cart)
             {
-                if (block == 0)
+                if (nbItem == 0)
                 {
                     printf("Your cart is empty.\n");
-                    block = 1;
                 }
                 else
                 {
@@ -133,10 +131,10 @@ void purchase(Customer clients[], int nbClients, int i)
                             /* Rezise stock after order */
 
                             modifiesQuantity(products, nb_products, panier[ipanier].reference, -panier[ipanier].quantity);
+                            saveProduct(products, nb_products, "src/products.txt");
                         }
 
-                        saveProduct(products, nb_products, "src/products.txt");
-
+                        
                         // Empty the cart
                         memset(panier, 0, SIZE_CARD);
                         nbItem = 0;
